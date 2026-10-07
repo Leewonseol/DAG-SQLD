@@ -1,0 +1,42 @@
+# sqld-learning-dag/web/ 정적 사이트를 GitHub Pages로 배포한다.
+# 빌드 단계(Jekyll, npm, Ruby 등) 없이 디렉터리 자체를 Pages artifact로 업로드한다.
+name: Deploy SQLD Learning DAG to Pages
+
+on:
+  push:
+    branches: [main]
+  # Actions 탭에서 수동 실행 허용
+  workflow_dispatch:
+
+# Pages 배포에 필요한 GITHUB_TOKEN 권한
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 동시 배포는 하나만. 진행 중인 배포는 취소하지 않는다.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./sqld-learning-dag/web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
