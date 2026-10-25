@@ -135,7 +135,8 @@
    "논리적으로 GROUP BY 다음, SELECT 이전"
   ],
   "exam_traps": [
-   "HAVING에 GROUP BY에 없는 일반 컬럼 조건을 쓰면 오류(집계 함수 또는 GROUP BY 컬럼만)."
+   "HAVING에 GROUP BY에 없는 일반 컬럼 조건을 쓰면 오류(집계 함수 또는 GROUP BY 컬럼만).",
+   "GROUP BY와 HAVING은 작성 순서를 바꿔도 수행된다(Oracle) — 보통은 GROUP BY 다음에 HAVING(개념정리·46회)."
   ],
   "comparisons": [
    "cmp_where_having"
@@ -322,10 +323,13 @@
   "why_it_matters": "",
   "core_rule": [
    "CUBE(a, b) → (a,b), (a), (b), () 4수준",
-   "인자 순서와 무관"
+   "인자 순서와 무관",
+   "인자 순서를 바꿔도 결과 데이터는 같고 정렬 순서만 달라질 수 있다",
+   "UNION ALL로 표현하면 인자 2개 → SELECT 4개"
   ],
   "exam_traps": [
-   "CUBE는 ROLLUP보다 많은 소계를 만든다(2^n)."
+   "CUBE는 ROLLUP보다 많은 소계를 만든다(2^n).",
+   "CUBE는 ROLLUP보다 시스템 부하가 크다('ROLLUP이 CUBE보다 부담이 크다'는 틀림, 34회)."
   ],
   "comparisons": [
    "cmp_group_ext"
@@ -351,6 +355,10 @@
    {
     "sql": "SELECT CASE GROUPING(job) WHEN 1 THEN 'ALL JOBS' ELSE job END AS job, SUM(sal)\n  FROM emp GROUP BY ROLLUP(job);",
     "explain": "총계 행에 'ALL JOBS' 표시"
+   },
+   {
+    "sql": "SELECT DECODE(GROUPING(dname), 1, 'All Departments', dname) AS dname, SUM(sal)\n  FROM emp JOIN dept USING (deptno) GROUP BY ROLLUP(dname);",
+    "explain": "DECODE로도 소계 행에 라벨을 붙일 수 있다(CASE와 같은 결과)"
    }
   ],
   "hubs": []
@@ -361,10 +369,13 @@
   "core_rule": [
    "GROUPING SETS(a, b) → (a), (b) 개별 집계만",
    "총계가 필요하면 () 추가",
-   "인자 순서와 무관"
+   "인자 순서와 무관",
+   "GROUP BY a UNION ALL GROUP BY b와 같다",
+   "총계까지 원하면 GROUPING SETS(a, b, ()) 또는 GROUPING SETS(a, b, NULL)"
   ],
   "exam_traps": [
-   "GROUPING SETS((a, b)) 와 GROUPING SETS(a, b)는 다르다."
+   "GROUPING SETS((a, b)) 와 GROUPING SETS(a, b)는 다르다.",
+   "ROLLUP·CUBE와 달리 총계가 자동으로 나오지 않는다."
   ],
   "comparisons": [
    "cmp_group_ext"
@@ -380,11 +391,13 @@
   "core_rule": [
    "ROLLUP(a, b) → (a,b), (a), () 3수준",
    "인자 순서가 바뀌면 결과가 바뀐다",
-   "소계 행의 집계되지 않은 컬럼은 NULL"
+   "소계 행의 집계되지 않은 컬럼은 NULL",
+   "UNION ALL로 같은 결과를 만들 수 있다(GROUP BY a, b ∪ GROUP BY a ∪ 전체)"
   ],
   "exam_traps": [
    "ROLLUP(a, b)에는 (b) 단독 소계가 없다.",
-   "소계 행의 NULL과 실제 NULL 데이터는 GROUPING()으로 구분."
+   "소계 행의 NULL과 실제 NULL 데이터는 GROUPING()으로 구분.",
+   "ROLLUP(species, breed)와 ROLLUP(breed, species)는 소계 기준이 달라 결과가 다르다."
   ],
   "comparisons": [
    "cmp_group_ext"
@@ -457,13 +470,17 @@
  "N0077": {
   "definition": "윈도우 프레임의 첫 행 값.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "PARTITION BY·ORDER BY 기준 첫 값 → ORDER BY ASC면 최솟값, DESC면 최댓값"
+  ],
   "exam_traps": [],
   "comparisons": [
    "cmp_lag_lead"
   ],
   "dialect_notes": [],
-  "dialects": [],
+  "dialects": [
+   "dl_window_textbook"
+  ],
   "examples": [],
   "hubs": []
  },
@@ -507,7 +524,9 @@
    "cmp_lag_lead"
   ],
   "dialect_notes": [],
-  "dialects": [],
+  "dialects": [
+   "dl_window_textbook"
+  ],
   "examples": [],
   "hubs": []
  },
@@ -541,11 +560,16 @@
  "N0083": {
   "definition": "NTILE(n) — 파티션을 n개 그룹으로 나눠 그룹 번호를 부여. 나누어떨어지지 않으면 앞 그룹부터 1개씩 더 배정.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "ORDER BY 필수, PARTITION BY로 그룹별 분할 가능",
+   "14행을 3그룹 → 5, 5, 4"
+  ],
   "exam_traps": [],
   "comparisons": [],
   "dialect_notes": [],
-  "dialects": [],
+  "dialects": [
+   "dl_window_textbook"
+  ],
   "examples": [
    {
     "sql": "NTILE(3) OVER(ORDER BY sal) — 행 10개",
@@ -595,7 +619,9 @@
  "N0087": {
   "definition": "ORDER BY 값 기준 프레임. 같은 정렬 값(동료 행)은 함께 포함된다.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "값이 같으면 같은 범위로 취급해 동시에 연산(동일 SAL 두 행의 누적합이 같다)"
+  ],
   "exam_traps": [],
   "comparisons": [
    "cmp_rows_range"
@@ -666,7 +692,9 @@
  "N0092": {
   "definition": "물리적 행 개수 기준 프레임.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "물리적 행 단위로 연산 — 값이 같아도 행마다 누적합이 다르다"
+  ],
   "exam_traps": [],
   "comparisons": [
    "cmp_rows_range"
@@ -770,11 +798,13 @@
    "행 수를 줄이지 않고 집합 문맥에서 계산한다.",
    "행 수를 줄이지 않는다(집계 함수와의 차이)",
    "OVER 절이 반드시 필요",
-   "논리적으로 SELECT 단계에서 계산 → WHERE에서 직접 사용 불가"
+   "논리적으로 SELECT 단계에서 계산 → WHERE에서 직접 사용 불가",
+   "집계 결과와 행 정보를 함께 출력 — 서브쿼리·조인으로 풀던 쿼리를 하나의 SELECT로"
   ],
   "exam_traps": [
    "윈도우 함수 결과로 필터하려면 인라인 뷰로 감싸야 한다(WHERE RANK() … 불가).",
-   "ORDER BY만 있고 프레임이 없으면 기본 프레임은 RANGE UNBOUNDED PRECEDING ~ CURRENT ROW (누적)."
+   "ORDER BY만 있고 프레임이 없으면 기본 프레임은 RANGE UNBOUNDED PRECEDING ~ CURRENT ROW (누적).",
+   "OVER() 안에 ORDER BY가 없으면 파티션 전체에 대한 합·평균이 나온다(누적 아님)."
   ],
   "comparisons": [],
   "dialect_notes": [],
@@ -828,11 +858,13 @@
   "why_it_matters": "",
   "core_rule": [
    "WHERE 단계에서 결과 행에 1부터 부여",
-   "ORDER BY보다 먼저 부여됨"
+   "ORDER BY보다 먼저 부여됨",
+   "WHERE의 ROWNUM 조건에는 ROWNUM = 1이 포함되는 형태(<=, <)여야 행이 나온다"
   ],
   "exam_traps": [
    "SELECT … WHERE ROWNUM <= 3 ORDER BY sal DESC 는 '아무 3행을 고른 뒤 정렬' — 상위 3명이 아니다.",
-   "WHERE ROWNUM = 1은 동작하지만 ROWNUM = 2, ROWNUM > 1은 항상 0행."
+   "WHERE ROWNUM = 1은 동작하지만 ROWNUM = 2, ROWNUM > 1은 항상 0행.",
+   "WHERE ROWNUM >= 1은 전체 행을 반환한다."
   ],
   "comparisons": [
    "cmp_topn"
@@ -3637,7 +3669,8 @@
   "why_it_matters": "",
   "core_rule": [
    "M행 × N행 = M×N행",
-   "ON 절 사용 불가"
+   "ON 절 사용 불가",
+   "E.F.Codd의 일반 집합 연산자 PRODUCT에 해당"
   ],
   "exam_traps": [
    "조인 조건을 빠뜨린 일반 조인도 카티션 곱이 된다."
@@ -3651,7 +3684,10 @@
  "N0298": {
   "definition": "등호(=) 조건으로 두 테이블을 연결하는 조인.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "보통 PK–FK 관계를 기반으로 하지만 반드시 PK–FK여야 성립하는 것은 아니다",
+   "Oracle: 조인 조건을 WHERE에 / ANSI: INNER JOIN … ON에"
+  ],
   "exam_traps": [],
   "comparisons": [],
   "dialect_notes": [],
@@ -3675,7 +3711,12 @@
   "dialects": [
    "dl_outer_join"
   ],
-  "examples": [],
+  "examples": [
+   {
+    "sql": "SELECT … FROM a, b WHERE a.id = b.id(+)\nUNION\nSELECT … FROM a, b WHERE a.id(+) = b.id;",
+    "explain": "Oracle (+) 표기로 FULL OUTER JOIN을 표현하려면 LEFT·RIGHT 두 결과를 UNION"
+   }
+  ],
   "hubs": []
  },
  "N0300": {
@@ -3684,7 +3725,9 @@
   "core_rule": [
    "매칭 행만 반환",
    "JOIN = INNER JOIN",
-   "INNER JOIN에서는 ON 조건과 WHERE 조건의 결과가 같다"
+   "INNER JOIN에서는 ON 조건과 WHERE 조건의 결과가 같다",
+   "Oracle 조인의 기본",
+   "ANSI INNER JOIN에는 USING 또는 ON 조건절이 필수"
   ],
   "exam_traps": [],
   "comparisons": [
@@ -3741,7 +3784,9 @@
  "N0303": {
   "definition": "N개 테이블을 빠짐없이 연결하려면 최소 N-1개의 조인 조건이 필요하다는 규칙.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "테이블 3개 → 조인 조건 최소 2개, 5개 → 4개(45회)"
+  ],
   "exam_traps": [],
   "comparisons": [],
   "dialect_notes": [],
@@ -3754,25 +3799,35 @@
   "why_it_matters": "",
   "core_rule": [
    "모든 동일 이름 컬럼으로 등가 조인",
-   "공통 컬럼은 결과에 한 번만 나옴"
+   "공통 컬럼은 결과에 한 번만 나옴",
+   "조인 컬럼은 이름·데이터 타입·도메인이 같아야 한다",
+   "SQL Server는 NATURAL JOIN을 지원하지 않는다"
   ],
   "exam_traps": [
    "NATURAL JOIN의 공통 컬럼에 테이블 별칭 접두사(e.deptno)를 붙이면 오류(Oracle).",
    "NATURAL JOIN과 ON/USING을 함께 쓸 수 없다.",
-   "공통 컬럼이 여러 개면 모두 조건이 된다."
+   "공통 컬럼이 여러 개면 모두 조건이 된다.",
+   "NATURAL JOIN을 쓰면 USING·ON·WHERE 절에서 조인 조건을 추가로 정의할 수 없다.",
+   "SELECT * 이면 공통 컬럼이 결과의 첫 번째 컬럼으로 한 번만 나온다.",
+   "조인 컬럼 값이 NULL인 행은 일치로 보지 않는다."
   ],
   "comparisons": [
    "cmp_join_syntax"
   ],
   "dialect_notes": [],
-  "dialects": [],
+  "dialects": [
+   "dl_using_natural"
+  ],
   "examples": [],
   "hubs": []
  },
  "N0305": {
   "definition": "= 이외의 조건(BETWEEN, >, < 등)으로 연결하는 조인(예: 급여 등급 테이블).",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "= 이외의 BETWEEN, >, >=, <, <= 연산자로 조인",
+   "예: EMP.SAL BETWEEN SALGRADE.LOSAL AND SALGRADE.HISAL"
+  ],
   "exam_traps": [],
   "comparisons": [],
   "dialect_notes": [],
@@ -3786,7 +3841,9 @@
   "core_rule": [
    "조인 조건 명시",
    "컬럼명이 달라도 사용 가능",
-   "OUTER JOIN에서 비보존 쪽 필터는 ON에"
+   "OUTER JOIN에서 비보존 쪽 필터는 ON에",
+   "ON 조건절의 괄호는 선택",
+   "ANSI: ON 절에는 조인 조건, WHERE 절에는 일반(필터) 조건"
   ],
   "exam_traps": [
    "ON에 쓴 조건과 WHERE에 쓴 조건은 OUTER JOIN에서 결과가 다르다."
@@ -3907,16 +3964,23 @@
   "definition": "같은 이름 컬럼으로 등가 조인하는 ANSI 문법. USING 컬럼에는 테이블 별칭을 붙일 수 없다(Oracle).",
   "why_it_matters": "",
   "core_rule": [
-   "USING(col) = 같은 이름 컬럼 등가 조인"
+   "USING(col) = 같은 이름 컬럼 등가 조인",
+   "USING (컬럼) — 괄호 필수",
+   "조인할 두 컬럼의 이름이 같을 때만 사용",
+   "SQL Server는 USING을 지원하지 않는다"
   ],
   "exam_traps": [
-   "USING에 쓴 컬럼은 SELECT에서 별칭 접두사를 붙일 수 없다(Oracle)."
+   "USING에 쓴 컬럼은 SELECT에서 별칭 접두사를 붙일 수 없다(Oracle).",
+   "SELECT * 이면 USING 기준 컬럼이 결과의 첫 번째 컬럼으로 한 번만 나온다.",
+   "USING 기준 컬럼에 테이블명·별칭 접두사(DEPT.DEPTNO)를 붙이면 오류."
   ],
   "comparisons": [
    "cmp_join_syntax"
   ],
   "dialect_notes": [],
-  "dialects": [],
+  "dialects": [
+   "dl_using_natural"
+  ],
   "examples": [],
   "hubs": []
  },
@@ -3958,9 +4022,12 @@
   "why_it_matters": "",
   "core_rule": [
    "같은 테이블에 서로 다른 별칭 두 개",
-   "자기참조 FK(MGR → EMPNO)로 연결"
+   "자기참조 FK(MGR → EMPNO)로 연결",
+   "FROM 절에 같은 테이블이 두 번 이상 나오므로 테이블 별칭이 반드시 필요"
   ],
-  "exam_traps": [],
+  "exam_traps": [
+   "계층형 질의에 사용되는 조인은 셀프 조인이다(46회)."
+  ],
   "comparisons": [],
   "dialect_notes": [],
   "dialects": [],
@@ -4486,7 +4553,8 @@
   "core_rule": [
    "INSERT/UPDATE/DELETE/MERGE",
    "COMMIT 전까지 ROLLBACK 가능",
-   "Oracle은 DML 후 명시적 COMMIT 필요(도구 설정에 따라 다름)"
+   "Oracle은 DML 후 명시적 COMMIT 필요(도구 설정에 따라 다름)",
+   "SELECT를 DQL(Data Query Language)로 따로 분류하기도 한다"
   ],
   "exam_traps": [],
   "comparisons": [
@@ -4600,7 +4668,8 @@
   "core_rule": [],
   "exam_traps": [
    "WHERE 없는 UPDATE는 모든 행을 수정한다.",
-   "UPDATE t SET col = NULL은 가능(NOT NULL 제약이 없으면)."
+   "UPDATE t SET col = NULL은 가능(NOT NULL 제약이 없으면).",
+   "SET 절 서브쿼리 결과가 없으면 해당 컬럼이 NULL로 갱신될 수 있다."
   ],
   "comparisons": [],
   "dialect_notes": [],
@@ -4737,7 +4806,8 @@
    "Oracle: DDL 실행 시 자동 COMMIT"
   ],
   "exam_traps": [
-   "Oracle에서 DML 후 DDL을 실행하면 앞의 DML까지 COMMIT되어 ROLLBACK할 수 없다."
+   "Oracle에서 DML 후 DDL을 실행하면 앞의 DML까지 COMMIT되어 ROLLBACK할 수 없다.",
+   "TRUNCATE는 DML이 아니라 DDL(자동 커밋)이다."
   ],
   "comparisons": [
    "cmp_sql_kinds"
@@ -5159,7 +5229,10 @@
  "N0408": {
   "definition": "Transaction Control Language — COMMIT, ROLLBACK, SAVEPOINT.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "COMMIT · ROLLBACK · SAVEPOINT",
+   "DML은 사용자가 COMMIT해야 확정, COMMIT 전 ROLLBACK 가능"
+  ],
   "exam_traps": [],
   "comparisons": [
    "cmp_tcl",
@@ -6300,7 +6373,10 @@
  "N0482": {
   "definition": "조건의 논리값을 반전. NOT UNKNOWN = UNKNOWN.",
   "why_it_matters": "",
-  "core_rule": [],
+  "core_rule": [
+   "부정 비교 연산자: !=, ^=, <>(ISO 표준), NOT 컬럼 = 값, NOT 컬럼 > 값",
+   "부정 SQL 연산자: NOT BETWEEN a AND b, NOT IN (list), IS NOT NULL"
+  ],
   "exam_traps": [],
   "comparisons": [],
   "dialect_notes": [],
@@ -6390,9 +6466,13 @@
   "why_it_matters": "행 필터의 기본이며 NULL·IN·LIKE·BETWEEN·서브쿼리 등 대부분의 조건 문제가 WHERE에서 나온다.",
   "core_rule": [
    "조건이 TRUE인 행만 통과(FALSE·UNKNOWN 제외)",
-   "집계 함수·SELECT 별칭 사용 불가"
+   "집계 함수·SELECT 별칭 사용 불가",
+   "NULL은 = 로 조회할 수 없다 → IS NULL / IS NOT NULL",
+   "여러 조건은 AND·OR로 연결"
   ],
-  "exam_traps": [],
+  "exam_traps": [
+   "비교 대상의 데이터 타입이 다르면(예: 숫자 컬럼을 문자 상수와 비교) 형변환이 일어나 성능 문제가 생길 수 있다."
+  ],
   "comparisons": [
    "cmp_where_having"
   ],
@@ -6440,10 +6520,15 @@
   "hubs": []
  },
  "N0492": {
-  "definition": "산술 → 연결(||) → 비교 → IS NULL·LIKE·IN → BETWEEN → NOT → AND → OR 순으로 평가된다(괄호 우선).",
+  "definition": "WHERE 조건식의 연산자 우선순위(SQLD 기준): ① 괄호 → ② NOT → ③ 비교 연산자·SQL 연산자(BETWEEN, IN, LIKE, IS NULL) → ④ AND → ⑤ OR.",
   "why_it_matters": "",
-  "core_rule": [],
-  "exam_traps": [],
+  "core_rule": [
+   "괄호 → NOT → 비교·SQL 연산자 → AND → OR",
+   "괄호가 없으면 AND가 OR보다 먼저 묶인다"
+  ],
+  "exam_traps": [
+   "V1 = 'A' AND V2 = 'T1' OR V2 = 'T2'는 (V1 = 'A' AND V2 = 'T1') OR V2 = 'T2'로 평가된다(45회)."
+  ],
   "comparisons": [],
   "dialect_notes": [],
   "dialects": [],
@@ -6473,7 +6558,9 @@
   "definition": "(col1, col2) IN ((1,'A'),(2,'B'))처럼 여러 컬럼을 묶어 비교. Oracle은 지원, SQL Server는 미지원.",
   "why_it_matters": "",
   "core_rule": [],
-  "exam_traps": [],
+  "exam_traps": [
+   "다중 컬럼 서브쿼리는 (a, b) = / IN 비교만 가능하고 대소 비교는 할 수 없다."
+  ],
   "comparisons": [],
   "dialect_notes": [],
   "dialects": [
@@ -6510,7 +6597,9 @@
   "core_rule": [
    "기본 ASC",
    "컬럼명·별칭·순서번호·표현식 사용 가능",
-   "SELECT에 없는 컬럼으로도 정렬 가능(단, DISTINCT·GROUP BY·집합 연산 시 제한)"
+   "SELECT에 없는 컬럼으로도 정렬 가능(단, DISTINCT·GROUP BY·집합 연산 시 제한)",
+   "여러 컬럼이면 가장 왼쪽 컬럼부터 우선 적용",
+   "숫자·문자·날짜 모두 정렬 가능(날짜는 과거가 작은 값)"
   ],
   "exam_traps": [
    "ORDER BY 2는 SELECT 목록 두 번째 컬럼. 목록 개수보다 큰 번호는 오류.",
@@ -6706,7 +6795,9 @@
    "메인쿼리 컬럼을 참조",
    "메인쿼리 행마다 서브쿼리 평가"
   ],
-  "exam_traps": [],
+  "exam_traps": [
+   "복합 PK 테이블을 연관 조건으로 참조할 때는 PK 컬럼을 모두 조건에 써야 단일 행이 된다(30회 12번 ORA-01427)."
+  ],
   "comparisons": [
    "cmp_subquery_types"
   ],
@@ -6728,7 +6819,9 @@
    "WHERE: 단일행/다중행/다중컬럼 서브쿼리",
    "FROM: 인라인 뷰",
    "SELECT: 스칼라 서브쿼리",
-   "메인쿼리 컬럼을 참조하면 상관 서브쿼리"
+   "메인쿼리 컬럼을 참조하면 상관 서브쿼리",
+   "중첩 서브쿼리(WHERE·HAVING)의 반환 형태: 단일행 · 다중행 · 다중컬럼",
+   "HAVING 절, UPDATE의 SET 절에서도 사용 가능"
   ],
   "exam_traps": [
    "단일행 연산자(=)에 여러 행을 반환하는 서브쿼리 → 오류.",
@@ -6766,7 +6859,8 @@
   "core_rule": [
    "1행 1열만 반환",
    "결과가 없으면 NULL",
-   "2행 이상이면 오류"
+   "2행 이상이면 오류",
+   "'단일행 연관 서브쿼리'라고도 한다 — 메인쿼리 각 행마다 단일 값 반환"
   ],
   "exam_traps": [
    "스칼라 서브쿼리는 OUTER JOIN처럼 동작한다(매칭이 없어도 메인 행은 남고 값은 NULL)."
@@ -6784,9 +6878,14 @@
   "why_it_matters": "",
   "core_rule": [
    "FROM 절 서브쿼리",
-   "ORDER BY 사용 가능 → ROWNUM Top-N 패턴에 필수"
+   "ORDER BY 사용 가능 → ROWNUM Top-N 패턴에 필수",
+   "동적 뷰(Dynamic View)라고도 하며 DB에 저장되지 않는 일회성 결과",
+   "인라인 뷰 컬럼은 메인쿼리의 어느 절에서든 사용 가능(WHERE 중첩 서브쿼리와 차이)"
   ],
-  "exam_traps": [],
+  "exam_traps": [
+   "메인쿼리는 WHERE 절 서브쿼리의 컬럼을 쓸 수 없지만 FROM 절 인라인 뷰의 컬럼은 쓸 수 있다(21·48회).",
+   "인라인 뷰를 다른 테이블과 조인 조건에서 참조하려면 별칭이 필요하다."
+  ],
   "comparisons": [
    "cmp_subquery_types",
    "cmp_view_table"
@@ -7247,6 +7346,99 @@
   "dialects": [
    "dl_outer_join"
   ],
+  "examples": [],
+  "hubs": []
+ },
+ "D001": {
+  "definition": "Oracle에서 테이블이 필요 없는 계산·함수 결과를 조회할 때 FROM 절을 채우는 더미 테이블. SYS 소유이며 모든 사용자가 접근할 수 있고, DUMMY 컬럼(VARCHAR2(1))에 'X' 한 행만 들어 있다.",
+  "why_it_matters": "",
+  "core_rule": [
+   "Oracle 23c 이전에는 SELECT에 FROM 절이 필수 → SELECT 1+1 FROM DUAL",
+   "SYS 소유, 모든 사용자가 접근 가능",
+   "DUMMY 컬럼 1개에 'X' 값 1행",
+   "SQL Server(Sybase)는 FROM 없이 SELECT 절만으로 수행 가능"
+  ],
+  "exam_traps": [
+   "DUAL은 1행 테이블이라 SELECT 함수(…) FROM DUAL 결과는 항상 1행이다."
+  ],
+  "comparisons": [],
+  "dialect_notes": [
+   "Oracle: SELECT SYSDATE FROM DUAL / SQL Server: SELECT GETDATE()"
+  ],
+  "dialects": [
+   "dl_dual"
+  ],
+  "examples": [],
+  "hubs": []
+ },
+ "D002": {
+  "definition": "E.F.Codd가 제시한 관계형 데이터베이스 고유의 연산자 SELECT·PROJECT·JOIN·DIVIDE. SQL에서 SELECT 연산은 WHERE 절, PROJECT 연산은 SELECT 절, JOIN 연산은 다양한 JOIN 구문으로 구현되며 DIVIDE는 현재 사용되지 않는다.",
+  "why_it_matters": "",
+  "core_rule": [
+   "SELECT 연산 → WHERE 절",
+   "PROJECT 연산 → SELECT 절(컬럼 선택)",
+   "(NATURAL) JOIN 연산 → 다양한 JOIN 구문",
+   "DIVIDE 연산 → 현재 SQL에서 사용하지 않음"
+  ],
+  "exam_traps": [
+   "관계 대수의 SELECT 연산은 SQL의 SELECT 절이 아니라 WHERE 절(행 선택)에 대응한다."
+  ],
+  "comparisons": [],
+  "dialect_notes": [],
+  "dialects": [],
+  "examples": [],
+  "hubs": []
+ },
+ "D003": {
+  "definition": "수학의 집합 연산을 관계에 적용한 UNION·INTERSECTION·DIFFERENCE·PRODUCT. SQL에서는 UNION/UNION ALL, INTERSECT, MINUS(EXCEPT), CROSS JOIN으로 구현된다.",
+  "why_it_matters": "",
+  "core_rule": [
+   "UNION → UNION / UNION ALL",
+   "INTERSECTION → INTERSECT",
+   "DIFFERENCE → MINUS / EXCEPT",
+   "PRODUCT → CROSS JOIN(카티션 곱)"
+  ],
+  "exam_traps": [
+   "A={1,2,3,4}, B={3,4,5,6}에서 {3,4}를 만드는 연산은 INTERSECTION(45회)."
+  ],
+  "comparisons": [],
+  "dialect_notes": [],
+  "dialects": [],
+  "examples": [],
+  "hubs": []
+ },
+ "D004": {
+  "definition": "집계 함수 뒤에 KEEP (DENSE_RANK FIRST|LAST ORDER BY …)을 붙여, 정렬 기준 첫(또는 마지막) 순위에 해당하는 행들만 대상으로 집계하는 Oracle 문법.",
+  "why_it_matters": "",
+  "core_rule": [
+   "집계함수(열) KEEP (DENSE_RANK FIRST ORDER BY 정렬열) — 정렬 1순위 행들만 집계",
+   "LAST는 마지막 순위 행들만 집계",
+   "동순위가 여러 행이면 그 행들에 집계함수를 적용"
+  ],
+  "exam_traps": [],
+  "comparisons": [],
+  "dialect_notes": [],
+  "dialects": [],
+  "examples": [
+   {
+    "sql": "SELECT MAX(sal) KEEP (DENSE_RANK FIRST ORDER BY hiredate) FROM emp;",
+    "explain": "가장 먼저 입사한 사원(들) 중 최고 급여"
+   }
+  ],
+  "hubs": []
+ },
+ "D005": {
+  "definition": "데이터 모델이 표현하는 세 가지 요소 — 업무가 관여하는 어떤 것(Things: 엔터티), 그것이 가지는 성격(Attributes: 속성), 그것들 사이의 관계(Relationships: 관계).",
+  "why_it_matters": "",
+  "core_rule": [
+   "Things(엔터티) · Attributes(속성) · Relationships(관계)"
+  ],
+  "exam_traps": [
+   "3요소에 'Process'는 포함되지 않는다(21회 오답 보기)."
+  ],
+  "comparisons": [],
+  "dialect_notes": [],
+  "dialects": [],
   "examples": [],
   "hubs": []
  }

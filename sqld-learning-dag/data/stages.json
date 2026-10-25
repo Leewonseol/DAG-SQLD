@@ -16,7 +16,7 @@
    ],
    "core_concepts_text": "엔터티·속성·관계·ERD",
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
-   "concept_count": 71,
+   "concept_count": 72,
    "current_count": 44,
    "default_visible_count": 51,
    "backbone_prereq_reduced": []
@@ -63,9 +63,9 @@
    ],
    "core_concepts_text": "SQL 실행순서·NULL·WHERE·ORDER BY",
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
-   "concept_count": 63,
+   "concept_count": 64,
    "current_count": 43,
-   "default_visible_count": 52,
+   "default_visible_count": 54,
    "backbone_prereq_reduced": [
     1
    ]
@@ -90,7 +90,7 @@
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
    "concept_count": 55,
    "current_count": 33,
-   "default_visible_count": 40,
+   "default_visible_count": 41,
    "backbone_prereq_reduced": [
     2
    ]
@@ -112,9 +112,9 @@
    ],
    "core_concepts_text": "JOIN·서브쿼리·UNION",
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
-   "concept_count": 45,
+   "concept_count": 47,
    "current_count": 33,
-   "default_visible_count": 41,
+   "default_visible_count": 46,
    "backbone_prereq_reduced": [
     3
    ]
@@ -138,7 +138,7 @@
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
    "concept_count": 26,
    "current_count": 25,
-   "default_visible_count": 25,
+   "default_visible_count": 26,
    "backbone_prereq_reduced": [
     4
    ]
@@ -161,9 +161,9 @@
    ],
    "core_concepts_text": "윈도우·Top-N·계층형",
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
-   "concept_count": 56,
+   "concept_count": 57,
    "current_count": 37,
-   "default_visible_count": 43,
+   "default_visible_count": 48,
    "backbone_prereq_reduced": [
     5
    ]
@@ -192,7 +192,7 @@
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
    "concept_count": 50,
    "current_count": 28,
-   "default_visible_count": 31,
+   "default_visible_count": 32,
    "backbone_prereq_reduced": [
     6
    ]
@@ -214,7 +214,7 @@
    "meaning": "DAG의 간선은 '이해를 위해 먼저 필요한 지식'만 표현. 대조/방언/영향 관계는 Edge 시트에서 별도 표현.",
    "concept_count": 25,
    "current_count": 19,
-   "default_visible_count": 21,
+   "default_visible_count": 22,
    "backbone_prereq_reduced": [
     7
    ]
@@ -286,9 +286,9 @@
    "order": 0,
    "stage_order": 0,
    "domain_name": "데이터 모델링",
-   "concept_count": 21,
+   "concept_count": 22,
    "current_count": 8,
-   "legacy_hidden_count": 9
+   "legacy_hidden_count": 10
   },
   {
    "code": "DM1",
@@ -412,7 +412,7 @@
    "order": 1,
    "stage_order": 2,
    "domain_name": "SQL 언어·표현식",
-   "concept_count": 7,
+   "concept_count": 8,
    "current_count": 4,
    "legacy_hidden_count": 2
   },
@@ -456,7 +456,7 @@
    "domain_name": "SQL 언어·표현식",
    "concept_count": 22,
    "current_count": 17,
-   "legacy_hidden_count": 4
+   "legacy_hidden_count": 3
   },
   {
    "code": "SQ5",
@@ -526,7 +526,7 @@
    "domain_name": "SQL 언어·표현식",
    "concept_count": 7,
    "current_count": 5,
-   "legacy_hidden_count": 2
+   "legacy_hidden_count": 1
   },
   {
    "code": "FN5",
@@ -552,9 +552,9 @@
    "order": 0,
    "stage_order": 4,
    "domain_name": "관계 결합·집합",
-   "concept_count": 23,
+   "concept_count": 24,
    "current_count": 15,
-   "legacy_hidden_count": 2
+   "legacy_hidden_count": 0
   },
   {
    "code": "SQ6",
@@ -568,7 +568,7 @@
    "domain_name": "관계 결합·집합",
    "concept_count": 13,
    "current_count": 10,
-   "legacy_hidden_count": 1
+   "legacy_hidden_count": 0
   },
   {
    "code": "SQ7",
@@ -580,7 +580,7 @@
    "order": 2,
    "stage_order": 4,
    "domain_name": "관계 결합·집합",
-   "concept_count": 9,
+   "concept_count": 10,
    "current_count": 8,
    "legacy_hidden_count": 1
   },
@@ -596,7 +596,7 @@
    "domain_name": "집계·분석·계층",
    "concept_count": 21,
    "current_count": 20,
-   "legacy_hidden_count": 1
+   "legacy_hidden_count": 0
   },
   {
    "code": "AG2",
@@ -622,9 +622,9 @@
    "order": 0,
    "stage_order": 6,
    "domain_name": "집계·분석·계층",
-   "concept_count": 30,
+   "concept_count": 31,
    "current_count": 15,
-   "legacy_hidden_count": 10
+   "legacy_hidden_count": 7
   },
   {
    "code": "AG4",
@@ -666,7 +666,7 @@
    "domain_name": "집계·분석·계층",
    "concept_count": 17,
    "current_count": 15,
-   "legacy_hidden_count": 2
+   "legacy_hidden_count": 1
   },
   {
    "code": "MG1",
@@ -694,7 +694,7 @@
    "domain_name": "데이터 관리·트랜잭션",
    "concept_count": 27,
    "current_count": 13,
-   "legacy_hidden_count": 12
+   "legacy_hidden_count": 11
   },
   {
    "code": "MG3",
@@ -736,7 +736,7 @@
    "domain_name": "데이터 관리·트랜잭션",
    "concept_count": 14,
    "current_count": 10,
-   "legacy_hidden_count": 2
+   "legacy_hidden_count": 1
   },
   {
    "code": "MG6",

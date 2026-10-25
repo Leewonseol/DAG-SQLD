@@ -5,9 +5,10 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    37,
+   46,
    49
   ],
   "shown_by_default_as_support": true,
@@ -22,9 +23,10 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   44
+   44,
+   47
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -39,9 +41,10 @@
   "cluster": "DM0",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   45
+   45,
+   50
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -89,8 +92,9 @@
   "cluster": "DM0",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   21,
    46
   ],
   "shown_by_default_as_support": true,
@@ -105,7 +109,7 @@
   "cluster": "DM3",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 8,
+  "old_rounds": 9,
   "old_round_list": [
    30,
    34,
@@ -113,6 +117,7 @@
    39,
    43,
    44,
+   46,
    49,
    50
   ],
@@ -129,9 +134,11 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   34
+   30,
+   34,
+   48
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -145,12 +152,14 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 6,
   "old_round_list": [
    27,
    30,
    34,
-   41
+   41,
+   49,
+   50
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -175,11 +184,14 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 3,
+  "old_rounds": 6,
   "old_round_list": [
    27,
+   30,
    34,
-   39
+   39,
+   46,
+   48
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -231,9 +243,10 @@
   "cluster": "DM6",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    27,
+   34,
    38
   ],
   "shown_by_default_as_support": true,
@@ -254,8 +267,9 @@
   "cluster": "FN1",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    26,
    35,
    43,
@@ -273,8 +287,9 @@
   "cluster": "FN1",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   45,
    51
   ],
   "shown_by_default_as_support": true,
@@ -313,6 +328,7 @@
   "support_for": [
    "CASE",
    "CEIL",
+   "DECODE",
    "LENGTH",
    "LTRIM",
    "REGEXP_INSTR",
@@ -321,8 +337,7 @@
    "REPLACE",
    "ROUND",
    "RTRIM",
-   "SUBSTR",
-   "TRIM"
+   "SUBSTR"
   ],
   "priority": "C"
  },
@@ -378,8 +393,9 @@
   "cluster": "FN2",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    29,
    30,
    33,
@@ -415,7 +431,7 @@
    "INNER JOIN",
    "LEFT OUTER JOIN",
    "LEVEL",
-   "NATURAL JOIN"
+   "N-1 조인 조건"
   ],
   "priority": "C"
  },
@@ -425,10 +441,12 @@
   "cluster": "JN1",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 3,
+  "old_rounds": 5,
   "old_round_list": [
+   30,
    39,
    46,
+   47,
    51
   ],
   "shown_by_default_as_support": true,
@@ -437,6 +455,7 @@
    "LEFT OUTER JOIN",
    "ON vs WHERE",
    "OUTER JOIN 필터 위치 종합",
+   "Oracle (+) OUTER JOIN",
    "RIGHT OUTER JOIN"
   ],
   "priority": "C"
@@ -447,10 +466,12 @@
   "cluster": "JN1",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 4,
   "old_round_list": [
    44,
-   46
+   45,
+   46,
+   50
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -465,10 +486,12 @@
   "cluster": "JN1",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 4,
   "old_round_list": [
+   34,
    44,
-   45
+   45,
+   50
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -499,8 +522,11 @@
   "cluster": "JN1",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 4,
   "old_round_list": [
+   30,
+   34,
+   45,
    51
   ],
   "shown_by_default_as_support": true,
@@ -515,15 +541,17 @@
   "cluster": "MG1",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 7,
+  "old_rounds": 9,
   "old_round_list": [
    32,
+   34,
    37,
    39,
    40,
    43,
    44,
-   45
+   45,
+   49
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -539,11 +567,12 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 3,
+  "old_rounds": 4,
   "old_round_list": [
    30,
    32,
-   38
+   38,
+   50
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -605,10 +634,11 @@
   "cluster": "MG5",
   "stage": 8,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    34,
-   46
+   46,
+   48
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -678,6 +708,7 @@
   "shown_by_default_as_support": true,
   "support_for": [
    "CHECK",
+   "CREATE TABLE",
    "CTAS",
    "DATE_FORMAT",
    "DEFAULT",
@@ -687,8 +718,7 @@
    "NULL 처리 DBMS 차이",
    "PK 제약 비상속",
    "TO_CHAR",
-   "UNIQUE",
-   "날짜 ROUND"
+   "UNIQUE"
   ],
   "priority": "C"
  },
@@ -698,14 +728,18 @@
   "cluster": "SQ3",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   31
+   31,
+   49
   ],
   "shown_by_default_as_support": true,
   "support_for": [
    "NULL 정렬 DBMS 차이",
-   "NULLS LAST"
+   "NULLS FIRST",
+   "NULLS LAST",
+   "Oracle NULL 정렬",
+   "SQL Server NULL 정렬"
   ],
   "priority": "C"
  },
@@ -731,9 +765,12 @@
   "cluster": "SQ3",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 4,
   "old_round_list": [
-   31
+   31,
+   34,
+   46,
+   49
   ],
   "shown_by_default_as_support": true,
   "support_for": [
@@ -747,9 +784,10 @@
   "cluster": "SQ3",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    31,
+   34,
    41
   ],
   "shown_by_default_as_support": true,
@@ -797,8 +835,9 @@
   "cluster": "SQ6",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   34,
    47
   ],
   "shown_by_default_as_support": true,
@@ -813,13 +852,15 @@
   "cluster": "AG1",
   "stage": 5,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   44
+   30,
+   44,
+   46
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0074",
@@ -841,16 +882,18 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 6,
   "old_round_list": [
+   21,
    25,
    37,
    38,
+   46,
    49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0078",
@@ -858,8 +901,9 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   34,
    48
   ],
   "shown_by_default_as_support": false,
@@ -880,7 +924,7 @@
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0088",
@@ -888,9 +932,13 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 5,
   "old_round_list": [
-   38
+   21,
+   26,
+   38,
+   45,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -916,8 +964,10 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
+   34,
+   46,
    47
   ],
   "shown_by_default_as_support": false,
@@ -930,8 +980,9 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    37,
    38,
    45,
@@ -939,7 +990,7 @@
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0097",
@@ -947,8 +998,10 @@
   "cluster": "AG3",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 5,
+  "old_rounds": 7,
   "old_round_list": [
+   21,
+   26,
    31,
    37,
    38,
@@ -957,7 +1010,7 @@
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0098",
@@ -1007,9 +1060,10 @@
   "cluster": "DM0",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   27
+   27,
+   45
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1035,9 +1089,10 @@
   "cluster": "DM0",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   45
+   45,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1049,9 +1104,10 @@
   "cluster": "DM0",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   45
+   45,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1063,11 +1119,12 @@
   "cluster": "DM0",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
    37,
    39,
    46,
+   47,
    51
   ],
   "shown_by_default_as_support": false,
@@ -1136,9 +1193,11 @@
   "cluster": "DM2",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   27
+   21,
+   27,
+   34
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1164,10 +1223,11 @@
   "cluster": "DM3",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    34,
-   40
+   40,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1221,9 +1281,10 @@
   "cluster": "DM4",
   "stage": 0,
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   33
+   33,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1235,9 +1296,11 @@
   "cluster": "DM4",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   35
+   35,
+   48,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1249,9 +1312,10 @@
   "cluster": "DM4",
   "stage": 0,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   33
+   33,
+   46
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1277,9 +1341,10 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   34
+   34,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1305,10 +1370,14 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 6,
   "old_round_list": [
+   30,
    34,
-   39
+   39,
+   46,
+   48,
+   49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1335,10 +1404,12 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 4,
   "old_round_list": [
    34,
-   39
+   39,
+   46,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1378,10 +1449,12 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 4,
   "old_round_list": [
+   34,
    37,
-   40
+   40,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1407,8 +1480,9 @@
   "cluster": "DM5",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   50,
    51
   ],
   "shown_by_default_as_support": false,
@@ -1477,13 +1551,14 @@
   "cluster": "DM6",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 8,
+  "old_rounds": 9,
   "old_round_list": [
    27,
    30,
    34,
    35,
    39,
+   47,
    48,
    50,
    51
@@ -1498,9 +1573,10 @@
   "cluster": "DM6",
   "stage": 1,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   39
+   39,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1526,8 +1602,9 @@
   "cluster": "DM6",
   "stage": 1,
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   34,
    51
   ],
   "shown_by_default_as_support": false,
@@ -1582,9 +1659,10 @@
   "cluster": "FN1",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
    24,
+   30,
    33,
    37,
    47
@@ -1599,8 +1677,9 @@
   "cluster": "FN1",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
+   45,
    49,
    50
   ],
@@ -1614,8 +1693,9 @@
   "cluster": "FN2",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    29,
    30,
    33,
@@ -1660,10 +1740,11 @@
   "cluster": "FN3",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    33,
-   39
+   39,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -1733,14 +1814,15 @@
   "cluster": "FN4",
   "stage": 3,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
+   30,
    37,
    50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0498",
@@ -1764,13 +1846,15 @@
   "cluster": "HQ1",
   "stage": 6,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
+   21,
+   34,
    35
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0290",
@@ -1792,15 +1876,18 @@
   "cluster": "JN1",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 3,
+  "old_rounds": 6,
   "old_round_list": [
+   30,
    41,
    45,
-   47
+   47,
+   48,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0305",
@@ -1808,13 +1895,15 @@
   "cluster": "JN1",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
+   21,
+   34,
    37
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0319",
@@ -1906,8 +1995,9 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   30,
    31
   ],
   "shown_by_default_as_support": false,
@@ -1950,8 +2040,9 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   30,
    37
   ],
   "shown_by_default_as_support": false,
@@ -1964,9 +2055,10 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    37,
+   47,
    51
   ],
   "shown_by_default_as_support": false,
@@ -2008,9 +2100,10 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    37,
+   47,
    51
   ],
   "shown_by_default_as_support": false,
@@ -2023,8 +2116,9 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    33,
    34,
    37,
@@ -2040,9 +2134,11 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   33
+   30,
+   33,
+   34
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2054,8 +2150,10 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 3,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
+   30,
    31,
    39,
    51
@@ -2070,9 +2168,10 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   35
+   35,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2098,8 +2197,9 @@
   "cluster": "LG1",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   30,
    35
   ],
   "shown_by_default_as_support": false,
@@ -2145,9 +2245,10 @@
   "cluster": "LG2",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   29
+   29,
+   30
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2174,9 +2275,10 @@
   "cluster": "LG2",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   29
+   29,
+   30
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2188,9 +2290,10 @@
   "cluster": "LG2",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   29
+   29,
+   30
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2259,12 +2362,14 @@
   "cluster": "LG3",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 4,
+  "old_rounds": 6,
   "old_round_list": [
    31,
+   34,
    37,
    38,
-   39
+   39,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2304,10 +2409,12 @@
   "cluster": "LG4",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 5,
+  "old_rounds": 7,
   "old_round_list": [
+   21,
    26,
    33,
+   34,
    35,
    37,
    38
@@ -2336,9 +2443,10 @@
   "cluster": "LG4",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 5,
+  "old_rounds": 6,
   "old_round_list": [
    25,
+   30,
    33,
    34,
    37,
@@ -2354,8 +2462,9 @@
   "cluster": "LG4",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 4,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    30,
    37,
    38,
@@ -2414,10 +2523,11 @@
   "cluster": "LG5",
   "stage": "L",
   "legacy_kind": "out_of_scope",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    37,
-   38
+   38,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2444,8 +2554,9 @@
   "cluster": "MG1",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   30,
    37
   ],
   "shown_by_default_as_support": false,
@@ -2458,9 +2569,12 @@
   "cluster": "MG1",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 4,
   "old_round_list": [
-   37
+   30,
+   37,
+   47,
+   49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2472,9 +2586,12 @@
   "cluster": "MG1",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 4,
   "old_round_list": [
-   37
+   30,
+   37,
+   47,
+   49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2486,9 +2603,10 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   32
+   32,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2514,9 +2632,11 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   43
+   30,
+   43,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2585,9 +2705,10 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   32
+   32,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2599,8 +2720,9 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   30,
    32
   ],
   "shown_by_default_as_support": false,
@@ -2613,13 +2735,14 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   38
+   38,
+   49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0391",
@@ -2641,10 +2764,13 @@
   "cluster": "MG2",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 5,
   "old_round_list": [
+   30,
+   34,
    41,
-   45
+   45,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2656,9 +2782,11 @@
   "cluster": "MG3",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 3,
   "old_round_list": [
-   40
+   40,
+   47,
+   48
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2684,10 +2812,11 @@
   "cluster": "MG3",
   "stage": 7,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    30,
-   45
+   45,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2699,10 +2828,15 @@
   "cluster": "MG5",
   "stage": 8,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 7,
   "old_round_list": [
+   30,
+   34,
    38,
-   48
+   45,
+   48,
+   49,
+   50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2714,17 +2848,20 @@
   "cluster": "MG5",
   "stage": 8,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 5,
+  "old_rounds": 8,
   "old_round_list": [
    30,
+   34,
    38,
    41,
+   45,
    48,
+   49,
    50
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0420",
@@ -2760,8 +2897,9 @@
   "cluster": "SQ1",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
+   21,
    31
   ],
   "shown_by_default_as_support": false,
@@ -2788,9 +2926,11 @@
   "cluster": "SQ2",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 4,
+  "old_rounds": 6,
   "old_round_list": [
+   21,
    26,
+   30,
    31,
    35,
    40
@@ -2805,9 +2945,10 @@
   "cluster": "SQ2",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    26,
+   30,
    31
   ],
   "shown_by_default_as_support": false,
@@ -2835,11 +2976,13 @@
   "cluster": "SQ2",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 3,
+  "old_rounds": 5,
   "old_round_list": [
+   21,
    31,
    35,
-   40
+   40,
+   49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2893,14 +3036,15 @@
   "cluster": "SQ4",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 2,
+  "old_rounds": 3,
   "old_round_list": [
    29,
-   38
+   38,
+   45
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0500",
@@ -2908,9 +3052,13 @@
   "cluster": "SQ5",
   "stage": 2,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 5,
   "old_round_list": [
-   44
+   30,
+   34,
+   44,
+   48,
+   49
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
@@ -2928,7 +3076,7 @@
   ],
   "shown_by_default_as_support": false,
   "support_for": [],
-  "priority": "Legacy"
+  "priority": "C"
  },
  {
   "id": "N0522",
@@ -2936,9 +3084,10 @@
   "cluster": "SQ7",
   "stage": 4,
   "legacy_kind": "older_evidence_only",
-  "old_rounds": 1,
+  "old_rounds": 2,
   "old_round_list": [
-   46
+   46,
+   47
   ],
   "shown_by_default_as_support": false,
   "support_for": [],

@@ -102,7 +102,8 @@ def validate(data_dir: Path = DATA, graphs: dict | None = None, meta: dict | Non
     check("Stage 단조성: 선수 Concept의 Stage ≤ 다음 Concept의 Stage", not stage_viol, "; ".join(stage_viol[:20]))
 
     # ---- coverage ---------------------------------------------------------
-    source = [n for n in nodes if not n["synthetic"] and n["node_type"] != "DIALECT"]
+    source = [n for n in nodes if not n["synthetic"] and n["node_type"] != "DIALECT" and not n.get("supplement")]
+    supplement = [n for n in nodes if n.get("supplement")]
     current = [n for n in source if n["evidence_status"] == "current"]
     legacy_only = [n for n in source if n["in_legacy_only"]]
     gap = [n for n in source if n["mindmap_gap"]]
@@ -135,6 +136,9 @@ def validate(data_dir: Path = DATA, graphs: dict | None = None, meta: dict | Non
                 if not by_id[p]["visible_by_default"]:
                     broken.append(f"{by_id[p]['name']} → {n['name']}")
     check("기본 화면 노드의 선수 노드도 기본 화면에 있음(경로 끊김 없음)", not broken, "; ".join(broken[:20]))
+    note_hidden = [n["name"] for n in nodes if n.get("concept_notes") and n.get("legacy_kind") != "out_of_scope"
+                   and not n["visible_by_default"]]
+    check("2024 개정판 개념정리 수록 Concept이 기본 화면에서 숨겨지지 않음", not note_hidden, ", ".join(note_hidden))
     oos_support = [n["name"] for n in nodes if n.get("legacy_kind") == "out_of_scope" and n["visible_by_default"]]
     check("현행 범위 밖 Legacy(D7 등)는 기본 화면에서 숨김", not oos_support, ", ".join(oos_support))
     legacy_shown = [n for n in legacy_only if n["visible_by_default"]]
@@ -175,6 +179,7 @@ def validate(data_dir: Path = DATA, graphs: dict | None = None, meta: dict | Non
         "Total source concepts": len(source),
         "Current concepts": len(current),
         "Legacy-only concepts": len(legacy_only),
+        "Drive supplement concepts": len(supplement),
         "Learning DAG nodes": len(by_id),
         "Explicit prerequisite edges": len(explicit_edges),
         "Inferred prerequisite edges": len(inferred),
@@ -191,6 +196,7 @@ def validate(data_dir: Path = DATA, graphs: dict | None = None, meta: dict | Non
             "dialect_reference_nodes": sum(n["node_type"] == "DIALECT" for n in nodes),
             "synthetic_structure_nodes": sum(n["synthetic"] and n.get("synthetic_kind") == "structure" for n in nodes),
             "synthetic_integration_nodes": sum(n["synthetic"] and n.get("synthetic_kind") == "integration" for n in nodes),
+            "drive_supplement_nodes": len(supplement),
         },
         "stage_cluster_anchor_nodes": len(stages) + len(clusters),
         "weakly_connected_components_concept_only_prerequisite_graph": wcc_concepts,
@@ -220,6 +226,8 @@ def validate(data_dir: Path = DATA, graphs: dict | None = None, meta: dict | Non
     if meta:
         details["build_notes"] = meta.get("notes", [])
         details["curated_edges_duplicating_explicit"] = meta.get("curated_edges_duplicating_explicit", [])
+        if meta.get("drive_sources"):
+            details["drive_sources"] = meta["drive_sources"]
 
     ok = all(c["ok"] for c in checks if c["severity"] == "error")
     report = {"ok": ok, "summary": summary, "details": details, "checks": checks,

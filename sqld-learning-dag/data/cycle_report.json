@@ -7,11 +7,11 @@
   "is_dag": false,
   "cycles": [
    [
-    "WHERE",
     "GROUP BY",
     "HAVING",
     "SELECT",
-    "WHERE"
+    "WHERE",
+    "GROUP BY"
    ],
    [
     "GROUP BY",
@@ -35,16 +35,16 @@
     "kind": "explicit:PRECEDES (재검토 대상)"
    },
    {
-    "source": "WHERE",
-    "target": "GROUP BY",
-    "cycles_involved": 1,
-    "kind": "explicit:PRECEDES"
-   },
-   {
     "source": "SELECT",
     "target": "WHERE",
     "cycles_involved": 1,
     "kind": "inferred"
+   },
+   {
+    "source": "WHERE",
+    "target": "GROUP BY",
+    "cycles_involved": 1,
+    "kind": "explicit:PRECEDES"
    },
    {
     "source": "SELECT",
@@ -77,13 +77,13 @@
     "ROLLBACK"
    ],
    [
+    "DROP",
     "TRUNCATE",
-    "DELETE",
-    "TRUNCATE"
+    "DROP"
    ],
    [
     "TRUNCATE",
-    "DROP",
+    "DELETE",
     "TRUNCATE"
    ],
    [
@@ -92,19 +92,19 @@
     "ROW_NUMBER"
    ],
    [
-    "RANK",
     "DENSE_RANK",
-    "RANK"
+    "RANK",
+    "DENSE_RANK"
    ],
    [
-    "UNION ALL",
     "UNION",
-    "UNION ALL"
+    "UNION ALL",
+    "UNION"
    ],
    [
-    "정규화",
     "반정규화",
-    "정규화"
+    "정규화",
+    "반정규화"
    ],
    [
     "EXCEPT",
@@ -117,9 +117,9 @@
     "OUTER JOIN"
    ],
    [
-    "COUNT(열)",
     "COUNT(*)",
-    "COUNT(열)"
+    "COUNT(열)",
+    "COUNT(*)"
    ],
    [
     "WHERE",

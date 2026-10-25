@@ -375,5 +375,41 @@
    "N0418",
    "N0416"
   ]
+ },
+ {
+  "id": "dl_using_natural",
+  "topic": "USING / NATURAL JOIN",
+  "ansi": "JOIN … USING (col), NATURAL JOIN",
+  "oracle": "지원",
+  "sqlserver": "미지원(ON 절 사용)",
+  "note": "2024 개정판 개념정리: USING 조건절·NATURAL JOIN 모두 'SQL Server에서는 지원X'.",
+  "concepts": [
+   "N0312",
+   "N0304"
+  ]
+ },
+ {
+  "id": "dl_dual",
+  "topic": "FROM 없는 SELECT",
+  "ansi": "-",
+  "oracle": "SELECT … FROM DUAL (23c부터 FROM 생략 가능)",
+  "sqlserver": "SELECT 절만으로 수행(SELECT GETDATE())",
+  "note": "",
+  "concepts": [
+   "D001"
+  ]
+ },
+ {
+  "id": "dl_window_textbook",
+  "topic": "FIRST_VALUE·LAST_VALUE·NTILE 지원(교재 표기)",
+  "ansi": "표준 윈도우 함수",
+  "oracle": "지원",
+  "sqlserver": "실제: NTILE 2005+, FIRST_VALUE·LAST_VALUE 2012+ 지원",
+  "note": "2024 개정판 개념정리는 'FIRST_VALUE, LAST_VALUE (SQL Server 지원X)', 'NTILE(N) (SQL Server는 지원X)'로 표기 — 구버전 가이드 기준 표기이므로 보기에서 이 문장을 만나면 교재 기준으로 판단.",
+  "concepts": [
+   "N0077",
+   "N0080",
+   "N0083"
+  ]
  }
 ]

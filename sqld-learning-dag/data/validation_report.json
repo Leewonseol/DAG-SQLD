@@ -4,10 +4,11 @@
   "Total source concepts": 475,
   "Current concepts": 286,
   "Legacy-only concepts": 185,
-  "Learning DAG nodes": 491,
+  "Drive supplement concepts": 5,
+  "Learning DAG nodes": 496,
   "Explicit prerequisite edges": 11,
-  "Inferred prerequisite edges": 644,
-  "Hierarchy edges": 916,
+  "Inferred prerequisite edges": 647,
+  "Hierarchy edges": 926,
   "Is DAG": true,
   "Number of weakly connected components": 1,
   "Orphan concepts": 0,
@@ -19,27 +20,31 @@
    "source_concepts": 475,
    "dialect_reference_nodes": 3,
    "synthetic_structure_nodes": 4,
-   "synthetic_integration_nodes": 9
+   "synthetic_integration_nodes": 9,
+   "drive_supplement_nodes": 5
   },
   "stage_cluster_anchor_nodes": 52,
-  "weakly_connected_components_concept_only_prerequisite_graph": 6,
+  "weakly_connected_components_concept_only_prerequisite_graph": 9,
   "standalone_concepts_cluster_root_anchored": {
-   "count": 3,
+   "count": 6,
    "names": [
+    "데이터 모델링 3요소",
+    "순수 관계 연산자",
+    "일반 집합 연산자",
     "ANSI/ISO SQL",
     "Oracle SQL",
     "SQL Server"
    ]
   },
-  "cluster_root_concepts(no prerequisite)": 14,
-  "legacy_only_shown_by_default_as_support(Priority C)": 39,
-  "legacy_only_hidden_by_default": 146,
-  "default_visible_nodes": 345,
+  "cluster_root_concepts(no prerequisite)": 17,
+  "legacy_only_shown_by_default_as_support(Priority C)": 52,
+  "legacy_only_hidden_by_default": 133,
+  "default_visible_nodes": 361,
   "default_core_tier_nodes": 153,
   "priority_distribution": {
-   "C": 50,
+   "C": 66,
    "B": 183,
-   "Legacy": 146,
+   "Legacy": 135,
    "A": 112
   },
   "priority_distribution_current_concepts": {
@@ -47,9 +52,9 @@
    "A": 109
   },
   "evidence_status_distribution": {
-   "legacy_only": 185,
+   "legacy_only": 187,
    "current": 286,
-   "reference": 7,
+   "reference": 10,
    "structure": 4,
    "integration": 9
   },
@@ -74,7 +79,7 @@
    "USES": 2
   },
   "transitively_redundant_prerequisite_edges(info)": {
-   "count": 40,
+   "count": 41,
    "examples": [
     "순환 관계(자기참조) → 계층형 질의",
     "후보키 → BCNF",
@@ -311,7 +316,7 @@
    {
     "stage": 0,
     "title": "모델링 기초",
-    "concepts": 71,
+    "concepts": 72,
     "current": 44,
     "default_visible": 51
    },
@@ -325,51 +330,51 @@
    {
     "stage": 2,
     "title": "SQL 실행 모델",
-    "concepts": 63,
+    "concepts": 64,
     "current": 43,
-    "default_visible": 52
+    "default_visible": 54
    },
    {
     "stage": 3,
     "title": "표현식·함수",
     "concepts": 55,
     "current": 33,
-    "default_visible": 40
+    "default_visible": 41
    },
    {
     "stage": 4,
     "title": "관계 결합",
-    "concepts": 45,
+    "concepts": 47,
     "current": 33,
-    "default_visible": 41
+    "default_visible": 46
    },
    {
     "stage": 5,
     "title": "집계",
     "concepts": 26,
     "current": 25,
-    "default_visible": 25
+    "default_visible": 26
    },
    {
     "stage": 6,
     "title": "고급 조회",
-    "concepts": 56,
+    "concepts": 57,
     "current": 37,
-    "default_visible": 43
+    "default_visible": 48
    },
    {
     "stage": 7,
     "title": "데이터/객체 관리",
     "concepts": 50,
     "current": 28,
-    "default_visible": 31
+    "default_visible": 32
    },
    {
     "stage": 8,
     "title": "트랜잭션·권한",
     "concepts": 25,
     "current": 19,
-    "default_visible": 21
+    "default_visible": 22
    },
    {
     "stage": 9,
@@ -390,7 +395,652 @@
    "hierarchy override 정규표현식 → (cluster): 원본 BELONGS_TO가 '정규표현식 ↔ 정규표현식 함수'로 서로를 부모로 가리키는 2-cycle. 패턴 언어(정규표현식)를 상위로, 함수군을 하위로 정리",
    "hierarchy override 정규표현식 함수 → 정규표현식: 위 2-cycle 해소: REGEXP_* 함수군은 정규표현식 패턴을 인자로 받음"
   ],
-  "curated_edges_duplicating_explicit": []
+  "curated_edges_duplicating_explicit": [],
+  "drive_sources": {
+   "root": "Google Drive: SQLD",
+   "folder_files": {
+    "50회_기출문제.pdf": "R50",
+    "49회_기출문제.pdf": "R49",
+    "48회_기출문제.pdf": "R48",
+    "47회_기출문제.pdf": "R47",
+    "46회_기출문제.pdf": "R46",
+    "45회_기출문제.pdf": "R45",
+    "SQLD_34_기출문제.pdf": "R34",
+    "SQLD_34_해답.txt": "R34",
+    "SQLD_30_기출문제.pdf": "R30",
+    "SQLD_30회_해답.txt": "R30",
+    "SQLD_30회_script.sql": "R30",
+    "SQLD_21_기출문제.pdf": "R21",
+    "SQLD_21_해답.pdf": "R21",
+    "기출문제 모음 및 해답(21, 24, 25, 26, 30).pdf": "R21,R24,R25,R26,R30",
+    "2. Study_Room_Doc_03_SQLD_단답형모음_Ver1.0.pdf": "R21,R24,R25,R26",
+    "2. Study_Room_Doc_03_SQLD_단답형해답_Ver1.0.pdf": "R21,R24,R25,R26"
+   },
+   "files": {
+    "R50": {
+     "path": "기출문제/50회_기출문제.pdf",
+     "round": 50,
+     "year": 2023,
+     "kind": "복원 기출(문항·해설)"
+    },
+    "R49": {
+     "path": "기출문제/49회_기출문제.pdf",
+     "round": 49,
+     "year": 2023,
+     "kind": "복원 기출(문항·해설)"
+    },
+    "R48": {
+     "path": "기출문제/48회_기출문제.pdf",
+     "round": 48,
+     "year": 2023,
+     "kind": "복원 기출(문항·해설)"
+    },
+    "R47": {
+     "path": "기출문제/47회_기출문제.pdf",
+     "round": 47,
+     "year": 2022,
+     "kind": "복원 기출(문항·해설)"
+    },
+    "R46": {
+     "path": "기출문제/46회_기출문제.pdf",
+     "round": 46,
+     "year": 2022,
+     "kind": "복원 기출(문항·해설)"
+    },
+    "R45": {
+     "path": "기출문제/45회_기출문제.pdf",
+     "round": 45,
+     "year": 2022,
+     "kind": "복원 기출(문항·해설)"
+    },
+    "R34": {
+     "path": "기출문제/SQLD_34_기출문제.pdf + SQLD_34_해답.txt",
+     "round": 34,
+     "year": 2019,
+     "kind": "복원 기출(S.O.S Network) + 해답"
+    },
+    "R30": {
+     "path": "기출문제/SQLD_30_기출문제.pdf + SQLD_30회_해답.txt + SQLD_30회_script.sql",
+     "round": 30,
+     "year": 2018,
+     "kind": "복원 기출(S.O.S Network) + 해답 + 재현 스크립트"
+    },
+    "R21": {
+     "path": "기출문제/SQLD_21_기출문제.pdf + SQLD_21_해답.pdf",
+     "round": 21,
+     "year": 2016,
+     "kind": "복원 기출(Study Room Doc.02) + 해설"
+    },
+    "R24": {
+     "path": "기출문제/기출문제 모음 및 해답(21, 24, 25, 26, 30).pdf + 2. Study_Room_Doc_03_SQLD_단답형모음/단답형해답_Ver1.0.pdf",
+     "round": 24,
+     "year": 2017,
+     "kind": "합본·단답형 복원 + 해답"
+    },
+    "R25": {
+     "path": "기출문제/기출문제 모음 및 해답(21, 24, 25, 26, 30).pdf + 2. Study_Room_Doc_03_SQLD_단답형모음/단답형해답_Ver1.0.pdf",
+     "round": 25,
+     "year": 2017,
+     "kind": "합본·단답형 복원 + 해답"
+    },
+    "R26": {
+     "path": "기출문제/기출문제 모음 및 해답(21, 24, 25, 26, 30).pdf + 2. Study_Room_Doc_03_SQLD_단답형모음/단답형해답_Ver1.0.pdf",
+     "round": 26,
+     "year": 2017,
+     "kind": "합본·단답형 복원 + 해답"
+    }
+   },
+   "questions_mapped": 447,
+   "concept_links": 1182,
+   "concepts_with_drive_evidence": 351,
+   "rounds_added_to_concepts": 731,
+   "skipped_questions": [
+    {
+     "file": "R50",
+     "q": "15",
+     "reason": "'빠짐없이 값 나오는거 둘중 해당하는거' — 지문 없음"
+    },
+    {
+     "file": "R50",
+     "q": "16",
+     "reason": "'17, 18, 19, 20 이런 선택 문제' — 지문 없음"
+    },
+    {
+     "file": "R50",
+     "q": "29",
+     "reason": "'???' — 지문 없음"
+    },
+    {
+     "file": "R50",
+     "q": "32",
+     "reason": "VARCHAR(8) 컬럼 조건 SQL 선택 — 보기 없음"
+    },
+    {
+     "file": "R45",
+     "q": "12",
+     "reason": "'SNS 별 추천점수 추출하는 함수' — 지문·보기 없음"
+    },
+    {
+     "file": "R24",
+     "q": "단답2",
+     "reason": "해답(10, 8, 10)만 있고 문항이 미복원"
+    },
+    {
+     "file": "R24",
+     "q": "단답7·8",
+     "reason": "'Self 조인 관련된 문제로 미복원'"
+    }
+   ],
+   "supplement_nodes": [
+    {
+     "name": "DUAL",
+     "status": "reference",
+     "basis": "2024개정판_SQLD_개념정리.pdf 'DUAL 테이블의 특성'. 48·49회 기출 지문(FROM DUAL)."
+    },
+    {
+     "name": "순수 관계 연산자",
+     "status": "reference",
+     "basis": "2024개정판_SQLD_개념정리.pdf '제8절 표준 조인 — 2. 순수 관계 연산자'(SELECT·PROJECT·JOIN·DIVIDE)."
+    },
+    {
+     "name": "일반 집합 연산자",
+     "status": "reference",
+     "basis": "2024개정판_SQLD_개념정리.pdf 'CROSS JOIN — E.F.CODD 박사가 언급한 일반 집합 연산자의 PRODUCT'. 45회 14번(Union·Difference·Intersection·Product)."
+    },
+    {
+     "name": "KEEP DENSE_RANK FIRST/LAST",
+     "status": "legacy_only",
+     "basis": "47회 기출 2과목 21번 MAX(COL1) KEEP (DENSE_RANK FIRST ORDER BY … DESC)."
+    },
+    {
+     "name": "데이터 모델링 3요소",
+     "status": "legacy_only",
+     "basis": "21회 기출 4번(데이터 모델링의 3가지 요소는 Thing·Attributes·Relationship) — 21회 해설·합본 PDF."
+    }
+   ],
+   "concept_note_file": "Google Drive: SQLD/정리본들/정리again/2024개정판_SQLD_개념정리.pdf",
+   "concept_note_concepts": 130,
+   "concept_note_legacy_shown": [
+    "ALTER",
+    "CREATE TABLE",
+    "CURRENT ROW",
+    "DECODE",
+    "GROUP BY 후 ORDER BY 제약",
+    "INSERT",
+    "JOIN",
+    "LAST_VALUE",
+    "N-1 조인 조건",
+    "NON-EQUI JOIN",
+    "NULL 정렬",
+    "NULLS FIRST",
+    "OUTER JOIN",
+    "Oracle (+) OUTER JOIN",
+    "Oracle NULL 정렬",
+    "RENAME",
+    "ROWS",
+    "SAVEPOINT",
+    "SELECT",
+    "SQL Server NULL 정렬",
+    "SYS_CONNECT_BY_PATH",
+    "UNBOUNDED FOLLOWING",
+    "UNBOUNDED PRECEDING",
+    "서브쿼리 ORDER BY 제한",
+    "연산자 우선순위"
+   ],
+   "content_review": [
+    {
+     "concept": "GROUP BY 후 ORDER BY 제약",
+     "changes": [],
+     "note": "개념정리는 'GROUP BY 후 ORDER BY에는 SELECT 절 컬럼만 가능'으로 단순화해 적었으나, SQL 전문가 가이드·실제 동작은 'GROUP BY 표현식·집계 함수'(SELECT에 없어도 가능)이므로 기존 정의를 유지(삭제하지 않음)."
+    },
+    {
+     "concept": "HAVING",
+     "changes": [
+      {
+       "field": "exam_traps",
+       "added": "GROUP BY와 HAVING은 작성 순서를 바꿔도 수행된다(Oracle) — 보통은 GROUP BY 다음에 HAVING(개념정리·46회)."
+      }
+     ]
+    },
+    {
+     "concept": "CUBE",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "인자 순서를 바꿔도 결과 데이터는 같고 정렬 순서만 달라질 수 있다"
+      },
+      {
+       "field": "core_rule",
+       "added": "UNION ALL로 표현하면 인자 2개 → SELECT 4개"
+      },
+      {
+       "field": "exam_traps",
+       "added": "CUBE는 ROLLUP보다 시스템 부하가 크다('ROLLUP이 CUBE보다 부담이 크다'는 틀림, 34회)."
+      }
+     ]
+    },
+    {
+     "concept": "GROUPING",
+     "changes": [
+      {
+       "field": "examples",
+       "added": {
+        "sql": "SELECT DECODE(GROUPING(dname), 1, 'All Departments', dname) AS dname, SUM(sal)\n  FROM emp JOIN dept USING (deptno) GROUP BY ROLLUP(dname);",
+        "explain": "DECODE로도 소계 행에 라벨을 붙일 수 있다(CASE와 같은 결과)"
+       }
+      }
+     ]
+    },
+    {
+     "concept": "GROUPING SETS",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "GROUP BY a UNION ALL GROUP BY b와 같다"
+      },
+      {
+       "field": "core_rule",
+       "added": "총계까지 원하면 GROUPING SETS(a, b, ()) 또는 GROUPING SETS(a, b, NULL)"
+      },
+      {
+       "field": "exam_traps",
+       "added": "ROLLUP·CUBE와 달리 총계가 자동으로 나오지 않는다."
+      }
+     ]
+    },
+    {
+     "concept": "ROLLUP",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "UNION ALL로 같은 결과를 만들 수 있다(GROUP BY a, b ∪ GROUP BY a ∪ 전체)"
+      },
+      {
+       "field": "exam_traps",
+       "added": "ROLLUP(species, breed)와 ROLLUP(breed, species)는 소계 기준이 달라 결과가 다르다."
+      }
+     ]
+    },
+    {
+     "concept": "FIRST_VALUE",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "PARTITION BY·ORDER BY 기준 첫 값 → ORDER BY ASC면 최솟값, DESC면 최댓값"
+      }
+     ]
+    },
+    {
+     "concept": "NTILE",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "ORDER BY 필수, PARTITION BY로 그룹별 분할 가능"
+      },
+      {
+       "field": "core_rule",
+       "added": "14행을 3그룹 → 5, 5, 4"
+      }
+     ]
+    },
+    {
+     "concept": "RANGE",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "값이 같으면 같은 범위로 취급해 동시에 연산(동일 SAL 두 행의 누적합이 같다)"
+      }
+     ]
+    },
+    {
+     "concept": "ROWS",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "물리적 행 단위로 연산 — 값이 같아도 행마다 누적합이 다르다"
+      }
+     ]
+    },
+    {
+     "concept": "윈도우 함수",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "집계 결과와 행 정보를 함께 출력 — 서브쿼리·조인으로 풀던 쿼리를 하나의 SELECT로"
+      },
+      {
+       "field": "exam_traps",
+       "added": "OVER() 안에 ORDER BY가 없으면 파티션 전체에 대한 합·평균이 나온다(누적 아님)."
+      }
+     ]
+    },
+    {
+     "concept": "ROWNUM",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "WHERE의 ROWNUM 조건에는 ROWNUM = 1이 포함되는 형태(<=, <)여야 행이 나온다"
+      },
+      {
+       "field": "exam_traps",
+       "added": "WHERE ROWNUM >= 1은 전체 행을 반환한다."
+      }
+     ]
+    },
+    {
+     "concept": "CROSS JOIN",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "E.F.Codd의 일반 집합 연산자 PRODUCT에 해당"
+      }
+     ]
+    },
+    {
+     "concept": "EQUI JOIN",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "보통 PK–FK 관계를 기반으로 하지만 반드시 PK–FK여야 성립하는 것은 아니다"
+      },
+      {
+       "field": "core_rule",
+       "added": "Oracle: 조인 조건을 WHERE에 / ANSI: INNER JOIN … ON에"
+      }
+     ]
+    },
+    {
+     "concept": "FULL OUTER JOIN",
+     "changes": [
+      {
+       "field": "examples",
+       "added": {
+        "sql": "SELECT … FROM a, b WHERE a.id = b.id(+)\nUNION\nSELECT … FROM a, b WHERE a.id(+) = b.id;",
+        "explain": "Oracle (+) 표기로 FULL OUTER JOIN을 표현하려면 LEFT·RIGHT 두 결과를 UNION"
+       }
+      }
+     ]
+    },
+    {
+     "concept": "INNER JOIN",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "Oracle 조인의 기본"
+      },
+      {
+       "field": "core_rule",
+       "added": "ANSI INNER JOIN에는 USING 또는 ON 조건절이 필수"
+      }
+     ]
+    },
+    {
+     "concept": "N-1 조인 조건",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "테이블 3개 → 조인 조건 최소 2개, 5개 → 4개(45회)"
+      }
+     ]
+    },
+    {
+     "concept": "NATURAL JOIN",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "조인 컬럼은 이름·데이터 타입·도메인이 같아야 한다"
+      },
+      {
+       "field": "core_rule",
+       "added": "SQL Server는 NATURAL JOIN을 지원하지 않는다"
+      },
+      {
+       "field": "exam_traps",
+       "added": "NATURAL JOIN을 쓰면 USING·ON·WHERE 절에서 조인 조건을 추가로 정의할 수 없다."
+      },
+      {
+       "field": "exam_traps",
+       "added": "SELECT * 이면 공통 컬럼이 결과의 첫 번째 컬럼으로 한 번만 나온다."
+      },
+      {
+       "field": "exam_traps",
+       "added": "조인 컬럼 값이 NULL인 행은 일치로 보지 않는다."
+      }
+     ]
+    },
+    {
+     "concept": "NON-EQUI JOIN",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "= 이외의 BETWEEN, >, >=, <, <= 연산자로 조인"
+      },
+      {
+       "field": "core_rule",
+       "added": "예: EMP.SAL BETWEEN SALGRADE.LOSAL AND SALGRADE.HISAL"
+      }
+     ]
+    },
+    {
+     "concept": "ON",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "ON 조건절의 괄호는 선택"
+      },
+      {
+       "field": "core_rule",
+       "added": "ANSI: ON 절에는 조인 조건, WHERE 절에는 일반(필터) 조건"
+      }
+     ]
+    },
+    {
+     "concept": "USING",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "USING (컬럼) — 괄호 필수"
+      },
+      {
+       "field": "core_rule",
+       "added": "조인할 두 컬럼의 이름이 같을 때만 사용"
+      },
+      {
+       "field": "core_rule",
+       "added": "SQL Server는 USING을 지원하지 않는다"
+      },
+      {
+       "field": "exam_traps",
+       "added": "SELECT * 이면 USING 기준 컬럼이 결과의 첫 번째 컬럼으로 한 번만 나온다."
+      },
+      {
+       "field": "exam_traps",
+       "added": "USING 기준 컬럼에 테이블명·별칭 접두사(DEPT.DEPTNO)를 붙이면 오류."
+      }
+     ]
+    },
+    {
+     "concept": "셀프 조인",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "FROM 절에 같은 테이블이 두 번 이상 나오므로 테이블 별칭이 반드시 필요"
+      },
+      {
+       "field": "exam_traps",
+       "added": "계층형 질의에 사용되는 조인은 셀프 조인이다(46회)."
+      }
+     ]
+    },
+    {
+     "concept": "DML",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "SELECT를 DQL(Data Query Language)로 따로 분류하기도 한다"
+      }
+     ]
+    },
+    {
+     "concept": "UPDATE",
+     "changes": [
+      {
+       "field": "exam_traps",
+       "added": "SET 절 서브쿼리 결과가 없으면 해당 컬럼이 NULL로 갱신될 수 있다."
+      }
+     ]
+    },
+    {
+     "concept": "DDL",
+     "changes": [
+      {
+       "field": "exam_traps",
+       "added": "TRUNCATE는 DML이 아니라 DDL(자동 커밋)이다."
+      }
+     ]
+    },
+    {
+     "concept": "TCL",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "COMMIT · ROLLBACK · SAVEPOINT"
+      },
+      {
+       "field": "core_rule",
+       "added": "DML은 사용자가 COMMIT해야 확정, COMMIT 전 ROLLBACK 가능"
+      }
+     ]
+    },
+    {
+     "concept": "NOT",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "부정 비교 연산자: !=, ^=, <>(ISO 표준), NOT 컬럼 = 값, NOT 컬럼 > 값"
+      },
+      {
+       "field": "core_rule",
+       "added": "부정 SQL 연산자: NOT BETWEEN a AND b, NOT IN (list), IS NOT NULL"
+      }
+     ]
+    },
+    {
+     "concept": "WHERE",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "NULL은 = 로 조회할 수 없다 → IS NULL / IS NOT NULL"
+      },
+      {
+       "field": "core_rule",
+       "added": "여러 조건은 AND·OR로 연결"
+      },
+      {
+       "field": "exam_traps",
+       "added": "비교 대상의 데이터 타입이 다르면(예: 숫자 컬럼을 문자 상수와 비교) 형변환이 일어나 성능 문제가 생길 수 있다."
+      }
+     ]
+    },
+    {
+     "concept": "연산자 우선순위",
+     "changes": [
+      {
+       "field": "definition",
+       "removed": "산술 → 연결(||) → 비교 → IS NULL·LIKE·IN → BETWEEN → NOT → AND → OR 순으로 평가된다(괄호 우선).",
+       "added": "WHERE 조건식의 연산자 우선순위(SQLD 기준): ① 괄호 → ② NOT → ③ 비교 연산자·SQL 연산자(BETWEEN, IN, LIKE, IS NULL) → ④ AND → ⑤ OR."
+      },
+      {
+       "field": "core_rule",
+       "added": "괄호 → NOT → 비교·SQL 연산자 → AND → OR"
+      },
+      {
+       "field": "core_rule",
+       "added": "괄호가 없으면 AND가 OR보다 먼저 묶인다"
+      },
+      {
+       "field": "exam_traps",
+       "added": "V1 = 'A' AND V2 = 'T1' OR V2 = 'T2'는 (V1 = 'A' AND V2 = 'T1') OR V2 = 'T2'로 평가된다(45회)."
+      }
+     ],
+     "note": "기존 정의 '산술 → 연결(||) → 비교 → IS NULL·LIKE·IN → BETWEEN → NOT → AND → OR'는 개념정리의 우선순위 표(괄호 → NOT → 비교·SQL 연산자 → AND → OR)와 NOT의 위치가 달라 삭제하고 개념정리 기준으로 교체."
+    },
+    {
+     "concept": "행값 IN",
+     "changes": [
+      {
+       "field": "exam_traps",
+       "added": "다중 컬럼 서브쿼리는 (a, b) = / IN 비교만 가능하고 대소 비교는 할 수 없다."
+      }
+     ]
+    },
+    {
+     "concept": "ORDER BY",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "여러 컬럼이면 가장 왼쪽 컬럼부터 우선 적용"
+      },
+      {
+       "field": "core_rule",
+       "added": "숫자·문자·날짜 모두 정렬 가능(날짜는 과거가 작은 값)"
+      }
+     ]
+    },
+    {
+     "concept": "상관 서브쿼리",
+     "changes": [
+      {
+       "field": "exam_traps",
+       "added": "복합 PK 테이블을 연관 조건으로 참조할 때는 PK 컬럼을 모두 조건에 써야 단일 행이 된다(30회 12번 ORA-01427)."
+      }
+     ]
+    },
+    {
+     "concept": "서브쿼리",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "중첩 서브쿼리(WHERE·HAVING)의 반환 형태: 단일행 · 다중행 · 다중컬럼"
+      },
+      {
+       "field": "core_rule",
+       "added": "HAVING 절, UPDATE의 SET 절에서도 사용 가능"
+      }
+     ]
+    },
+    {
+     "concept": "스칼라 서브쿼리",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "'단일행 연관 서브쿼리'라고도 한다 — 메인쿼리 각 행마다 단일 값 반환"
+      }
+     ]
+    },
+    {
+     "concept": "인라인 뷰",
+     "changes": [
+      {
+       "field": "core_rule",
+       "added": "동적 뷰(Dynamic View)라고도 하며 DB에 저장되지 않는 일회성 결과"
+      },
+      {
+       "field": "core_rule",
+       "added": "인라인 뷰 컬럼은 메인쿼리의 어느 절에서든 사용 가능(WHERE 중첩 서브쿼리와 차이)"
+      },
+      {
+       "field": "exam_traps",
+       "added": "메인쿼리는 WHERE 절 서브쿼리의 컬럼을 쓸 수 없지만 FROM 절 인라인 뷰의 컬럼은 쓸 수 있다(21·48회)."
+      },
+      {
+       "field": "exam_traps",
+       "added": "인라인 뷰를 다른 테이블과 조인 조건에서 참조하려면 별칭이 필요하다."
+      }
+     ]
+    }
+   ]
+  }
  },
  "checks": [
   {
@@ -509,6 +1159,12 @@
   },
   {
    "check": "기본 화면 노드의 선수 노드도 기본 화면에 있음(경로 끊김 없음)",
+   "ok": true,
+   "detail": "",
+   "severity": "error"
+  },
+  {
+   "check": "2024 개정판 개념정리 수록 Concept이 기본 화면에서 숨겨지지 않음",
    "ok": true,
    "detail": "",
    "severity": "error"

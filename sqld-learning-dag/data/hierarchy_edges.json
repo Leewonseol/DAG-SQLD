@@ -5944,5 +5944,70 @@
   "type": "CLUSTER_CONCEPT",
   "is_root_anchor": false,
   "is_top_level": true
+ },
+ {
+  "source": "SQ1",
+  "target": "D001",
+  "type": "CLUSTER_CONCEPT",
+  "is_root_anchor": false,
+  "is_top_level": false
+ },
+ {
+  "source": "N0437",
+  "target": "D001",
+  "type": "PARENT_CHILD",
+  "cross_cluster": false
+ },
+ {
+  "source": "JN1",
+  "target": "D002",
+  "type": "CLUSTER_CONCEPT",
+  "is_root_anchor": true,
+  "is_top_level": false
+ },
+ {
+  "source": "N0301",
+  "target": "D002",
+  "type": "PARENT_CHILD",
+  "cross_cluster": false
+ },
+ {
+  "source": "SQ7",
+  "target": "D003",
+  "type": "CLUSTER_CONCEPT",
+  "is_root_anchor": true,
+  "is_top_level": false
+ },
+ {
+  "source": "N0520",
+  "target": "D003",
+  "type": "PARENT_CHILD",
+  "cross_cluster": false
+ },
+ {
+  "source": "AG3",
+  "target": "D004",
+  "type": "CLUSTER_CONCEPT",
+  "is_root_anchor": false,
+  "is_top_level": false
+ },
+ {
+  "source": "N0076",
+  "target": "D004",
+  "type": "PARENT_CHILD",
+  "cross_cluster": false
+ },
+ {
+  "source": "DM0",
+  "target": "D005",
+  "type": "CLUSTER_CONCEPT",
+  "is_root_anchor": true,
+  "is_top_level": false
+ },
+ {
+  "source": "N0118",
+  "target": "D005",
+  "type": "PARENT_CHILD",
+  "cross_cluster": false
  }
 ]
