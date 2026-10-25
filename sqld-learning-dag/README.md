@@ -34,27 +34,30 @@ python3 -m http.server 8000              # → http://localhost:8000/web/
 Total source concepts: 475
 Current concepts: 286
 Legacy-only concepts: 185
-Learning DAG nodes: 491
+Drive supplement concepts: 5
+Learning DAG nodes: 496
 Explicit prerequisite edges: 11
-Inferred prerequisite edges: 644
-Hierarchy edges: 916
+Inferred prerequisite edges: 647
+Hierarchy edges: 926
 Is DAG: True
 Number of weakly connected components: 1
 Orphan concepts: 0
 Current concepts not included in DAG: 0
 Mindmap-gap concepts not included in DAG: 0
 
-  (Learning DAG nodes breakdown: source_concepts=475, dialect_reference_nodes=3, synthetic_structure_nodes=4, synthetic_integration_nodes=9)
-  (Weakly connected components, concept-only prerequisite graph: 6; standalone cluster-root concepts: 3)
-  (Legacy-only shown as support / hidden by default: 39 / 146)
-  (Priority distribution: {'C': 50, 'B': 183, 'Legacy': 146, 'A': 112})
+  (Learning DAG nodes breakdown: source_concepts=475, dialect_reference_nodes=3, synthetic_structure_nodes=4, synthetic_integration_nodes=9, drive_supplement_nodes=5)
+  (Weakly connected components, concept-only prerequisite graph: 9; standalone cluster-root concepts: 6)
+  (Legacy-only shown as support / hidden by default: 52 / 133)
+  (Priority distribution: {'C': 66, 'B': 183, 'Legacy': 135, 'A': 112})
 
-All 28 validation checks passed.
+All 29 validation checks passed.
 ```
 
-- **Learning DAG nodes 491** = 원본 Concept 475 + 원본 DIALECT 참조 노드 3(ANSI/ISO SQL, Oracle SQL, SQL Server) + 합성 노드 13(구조 4, Stage 9 통합 9).
+- **Learning DAG nodes 496** = 원본 Concept 475 + 원본 DIALECT 참조 노드 3(ANSI/ISO SQL, Oracle SQL, SQL Server) + 합성 노드 13(구조 4, Stage 9 통합 9)
+  \+ Google Drive 자료로 추가한 Concept 5(아래 'Google Drive 자료 반영' 참조).
 - **Weakly connected components 1** 은 Stage backbone과 Cluster root anchor를 포함한 learning graph 기준입니다.
-  Concept끼리의 prerequisite edge만 보면 6개 덩어리(3단계 스키마 묶음, DIALECT 참조 노드 3개, Legacy 파티셔닝 묶음)가 있으며,
+  Concept끼리의 prerequisite edge만 보면 9개 덩어리(3단계 스키마 묶음, DIALECT 참조 노드 3개, Legacy 파티셔닝 묶음,
+  Drive 보충 노드 `순수 관계 연산자`·`일반 집합 연산자`·`데이터 모델링 3요소`)가 있으며,
   이들은 억지 edge를 만들지 않고 소속 Cluster root 아래에 배치했습니다.
 - **Orphan concepts 0** 은 모든 Concept이 어떤 Stage root에서든 도달 가능하다는 뜻입니다.
 
@@ -75,6 +78,8 @@ sqld-learning-dag/
       content*.py                  definition / core rule / exam trap / example / 검색 alias
       comparisons.py               시험 비교 카드 37개
       dialects.py                  ANSI / Oracle / SQL Server 차이 28개
+      drive_sources.py             Google Drive 'SQLD' 자료 반영분: 기출문제 폴더 문항→Concept 매핑, 개념정리 수록 목록,
+                                   신규 Concept 5개, 규칙 보강/불일치 제거(RULE_PATCHES), 방언 카드 3개
   data/
     nodes.json                     노드 + 메타데이터(Stage·Domain·Cluster·회차수·마인드맵·Priority·Legacy…)
     prerequisite_edges.json        Learning DAG edge (explicit + inferred)
@@ -85,7 +90,7 @@ sqld-learning-dag/
     comparisons.json / dialects.json
     stages.json                    Stage·Cluster·Domain·허브(20_Hubs_Rules)·gap family(04)
     legacy_nodes.json              11_Legacy_Only 185개와 기본 화면 표시 여부
-    evidence.json                  Concept별 회차 증거(03_Round_Concepts)
+    evidence.json                  Concept별 회차 증거(03_Round_Concepts + Drive 기출문제 폴더, Drive 행은 source·문항 번호 포함)
     validation_report.json         검증 결과 전체
     cycle_report.json              cycle 검사 결과(검토 전 후보 그래프 포함)
   web/
@@ -178,8 +183,10 @@ CONTRASTS·DIALECT 관계는 처음부터 후보에 들어가지 않으므로 cy
 | Current | `10_Current_Evidence` — 52회 이후 현행 기출에서 확인 | 286 | 표시 |
 | Legacy-only | `11_Legacy_Only` — 52회 이후 증거 없음 | 185 | 아래 참조 |
 | └ 보조(support) | Legacy-only 중 **현행 Concept의 선수/상위 개념** | 39 | 표시 (Priority C, 점선 테두리) |
-| └ 숨김 | 그 외 (D7 성능·옵티마이저·분산 DB·PL/SQL·물리 조인 전부 포함) | 146 | **Include Legacy**로만 표시 |
-| 참조 | 증거 없는 강의계획/구조 노드(PIVOT·UNPIVOT, IN·NOT IN …) + DIALECT 3 | 7 | 표시 (Priority C) |
+| └ 개념정리 수록 | Legacy-only 중 **2024 개정판 개념정리에 수록**된 개념(보조와 겹치지 않는 것) | 13 | 표시 (Priority C, '개념정리 수록' 배지) |
+| └ 숨김 | 그 외 (D7 성능·옵티마이저·분산 DB·PL/SQL·물리 조인 전부 포함) | 133 | **Include Legacy**로만 표시 |
+| 참조 | 증거 없는 강의계획/구조 노드(PIVOT·UNPIVOT, IN·NOT IN …) + DIALECT 3 + Drive 보충 3(DUAL·순수 관계 연산자·일반 집합 연산자) | 10 | 표시 (Priority C) |
+| Drive 보충 Legacy | 52회 이전 기출에서만 확인한 신규 Concept(KEEP DENSE_RANK FIRST/LAST, 데이터 모델링 3요소) | 2 | **Include Legacy**로만 표시 |
 
 Legacy 185개는 삭제하지 않습니다. 다만 `SELECT`, `JOIN`, `OUTER JOIN`, `식별자`, `INSERT`, `WITH 절`, `CTE`처럼
 **현행 Concept을 이해하는 데 반드시 필요한 구범위 전용 Concept**을 숨기면 학습 경로가 끊기므로
@@ -195,8 +202,8 @@ Legacy 185개는 삭제하지 않습니다. 다만 `SELECT`, `JOIN`, `OUTER JOIN
 |---|---|---:|
 | A | 현행 2회 이상 **그리고** (다른 현행 Concept의 직접 선수 **또는** 시험 함정 2개 이상 **또는** 비교 카드 대상), 또는 현행 4회 이상. Stage 9 통합 노드는 선수 중 A가 2개 이상이면 A | 112 |
 | B | 현행 출제 확인, A 조건 미충족 | 183 |
-| C | 현행 증거 없음이지만 구조적으로 필요(보조 Legacy, 참조, 합성 구조 노드) | 50 |
-| Legacy | 기본 숨김 | 146 |
+| C | 현행 증거 없음이지만 구조적으로 필요(보조 Legacy, 개념정리 수록 Legacy, 참조, 합성 구조 노드) | 66 |
+| Legacy | 기본 숨김 | 135 |
 
 각 노드의 `priority_reasons`에 판정 근거가 문장으로 들어 있습니다.
 
@@ -226,6 +233,40 @@ Legacy 185개는 삭제하지 않습니다. 다만 `SELECT`, `JOIN`, `OUTER JOIN
   - Stage 9 통합 9: `NULL 처리 / NULL 정렬 / Top-N / 차집합 / DDL 커밋 / 문자열 함수 DBMS 차이`,
     `별칭 가시성 / NULL 함정 / OUTER JOIN 필터 위치 종합` — 원본 Stage 9가 비어 있어
     `04_Mindmap_Gaps`의 gap family를 근거로 추가
+
+---
+
+## Google Drive 자료 반영 (`scripts/curation/drive_sources.py`)
+
+### `SQLD/기출문제` 폴더 (16개 파일)
+
+| 파일 | 반영 |
+|---|---|
+| 45·46·47·48·49·50회_기출문제.pdf | 회차별 문항을 Concept에 매핑 |
+| SQLD_34_기출문제.pdf + SQLD_34_해답.txt | 34회 50문항 매핑 |
+| SQLD_30_기출문제.pdf + SQLD_30회_해답.txt + SQLD_30회_script.sql | 30회 50문항 매핑 |
+| SQLD_21_기출문제.pdf + SQLD_21_해답.pdf | 21회 문항 매핑 (원본 시트에는 21회 증거가 하나도 없었음) |
+| 기출문제 모음 및 해답(21, 24, 25, 26, 30).pdf, Study_Room_Doc_03 단답형모음/해답 | 24·25·26회 문항 매핑 (21·30회는 개별 파일과 같은 문항이라 중복 매핑하지 않음) |
+
+- 문항 447개 → Concept 연결 1,182건, 351개 Concept에 Drive 근거 추가, Concept별 구범위 회차 731건 보강.
+- `evidence.json`의 Drive 행은 `source`(Drive 경로)와 `memo`(문항 번호·요지)를 가지며 웹앱 '구범위 기출 근거' 표에 표시됩니다.
+  파일은 비공개라 URL 대신 경로만 기록합니다.
+- 모두 51회 이전(구범위) 회차라 Current/Legacy 판정과 Priority A/B는 바뀌지 않습니다.
+- 지문이 복원되지 않아 Concept을 특정할 수 없는 문항 7개는 `SKIPPED_QUESTIONS`에 사유와 함께 남겼습니다.
+
+### `SQLD/정리본들/정리again/2024개정판_SQLD_개념정리.pdf`
+
+- PDF 텍스트 레이어에서 확인한 절(SELECT 문, WHERE, DUAL, ORDER BY, 조인, 표준 조인, 서브쿼리, 집합 연산자, 그룹 함수,
+  윈도우 함수, ROWNUM, 계층형 질의)의 Concept 130개에 '개념정리 수록' 표시(`concept_notes`).
+- 개념정리에 수록됐지만 원본에서 구범위 전용으로 숨겨져 있던 13개(`연산자 우선순위`, `SYS_CONNECT_BY_PATH`, `LAST_VALUE`,
+  `NON-EQUI JOIN`, `N-1 조인 조건`, `서브쿼리 ORDER BY 제한` …)는 현행 범위로 보고 기본 화면에 표시합니다(검증 항목 추가).
+- 원본에 없던 Concept 추가: `DUAL`, `순수 관계 연산자`, `일반 집합 연산자`(개념정리), `KEEP DENSE_RANK FIRST/LAST`(47회), `데이터 모델링 3요소`(21회).
+- 개념정리와 어긋난 내용 제거: `연산자 우선순위` 정의(NOT의 위치가 다름)를 개념정리 순서(괄호 → NOT → 비교·SQL 연산자 → AND → OR)로 교체.
+- 개념정리 내용 보강: USING·NATURAL JOIN(SQL Server 미지원, SELECT * 컬럼 순서), 인라인 뷰(동적 뷰), CUBE(시스템 부하), GROUPING SETS(총계),
+  ROWNUM, 윈도우 함수(ORDER BY 없으면 누적 아님), RANGE/ROWS 등 — 변경 전후는 `validation_report.json`의 `details.drive_sources.content_review`.
+- 개념정리 쪽이 부정확해 바꾸지 않은 항목: `GROUP BY 후 ORDER BY 제약`(개념정리 'SELECT 절 컬럼만' → 가이드 기준 'GROUP BY 표현식·집계 함수' 유지),
+  FIRST_VALUE·LAST_VALUE·NTILE의 'SQL Server 미지원' 표기(실제로는 지원) — 방언 카드에 교재 표기와 실제 동작을 함께 적었습니다.
+- PDF 대부분이 이미지라 텍스트 레이어가 없는 쪽(데이터 모델링 1과목 앞부분 등)은 자동 대조 대상에서 빠졌습니다.
 
 ---
 
@@ -266,8 +307,8 @@ Legacy 185개는 삭제하지 않습니다. 다만 `SELECT`, `JOIN`, `OUTER JOIN
 
 오류(error)로 처리하는 항목: DAG 여부(Concept DAG, anchor 포함 learning graph), cycle_report 일치, 명시 edge 관계 타입 제한,
 금지 관계(CONTRASTS·AFFECTS·DIALECT*·EXCEPTION·IS_A·IMPLEMENTS) 미사용, inferred edge의 reason, 중복/self-loop 없음,
-Stage 단조성, 원본 수(475/286/185/191) 일치, orphan 없음, Current·gap Concept의 DAG 포함 및 기본 화면 표시,
-기본 화면 노드의 선수가 숨겨지지 않음, D7 Legacy 기본 숨김, 계층 cycle 없음, 카드 참조 유효, 단일 연결 요소.
+Stage 단조성, 원본 수(475/286/185/191, Drive 보충 노드 제외) 일치, orphan 없음, Current·gap Concept의 DAG 포함 및 기본 화면 표시,
+기본 화면 노드의 선수가 숨겨지지 않음, D7 Legacy 기본 숨김, 2024 개정판 개념정리 수록 Concept 기본 화면 표시, 계층 cycle 없음, 카드 참조 유효, 단일 연결 요소.
 경고(warning): definition 누락, Priority A의 규칙/함정 누락, 허브 링크 미해석.
 
 ## 한계

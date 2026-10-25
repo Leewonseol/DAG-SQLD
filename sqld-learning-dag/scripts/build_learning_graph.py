@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from curation import comparisons as cmp_mod  # noqa: E402
 from curation import content as content_mod  # noqa: E402
 from curation import dialects as dialect_mod  # noqa: E402
+from curation import drive_sources as drv  # noqa: E402
 from curation import prerequisites as prereq_mod  # noqa: E402
 from curation import structure as st  # noqa: E402
 import validate_graph  # noqa: E402
@@ -184,6 +185,23 @@ def build(xlsx: Path) -> dict:
         }
         name_to_id[sn["name"]] = sn["id"]
 
+    # ---- supplement nodes (Google Drive 자료에서 확인, 원본 시트에 없음) ----
+    for sn in drv.NEW_CONCEPTS:
+        if sn["name"] in name_to_id:
+            raise ValueError(f"supplement node collides with existing name: {sn['name']}")
+        cl = clusters[sn["cluster"]]
+        nodes[sn["id"]] = {
+            "id": sn["id"], "name": sn["name"], "node_type": sn["node_type"],
+            "source_cluster": None, "cluster": sn["cluster"], "domain": cl["domain"],
+            "official_subject": "과목 II" if cl["domain"] != "D1" else "과목 I",
+            "source_evidence_status": "DRIVE_SUPPLEMENT", "source_stage_label": None,
+            "current_rounds": 0, "old_rounds": 0, "total_rounds": 0,
+            "mindmap_status": None, "original_parent_label": None, "memo": None,
+            "synthetic": False, "supplement": True, "supplement_status": sn["status"],
+            "supplement_basis": sn["basis"],
+        }
+        name_to_id[sn["name"]] = sn["id"]
+
     def nid_of(name: str) -> str:
         if name not in name_to_id:
             raise KeyError(f"unknown concept name in curation: {name!r}")
@@ -217,6 +235,26 @@ def build(xlsx: Path) -> dict:
             "strength": s(r["증거강도"]), "url": s(r["출처 URL"]), "memo": s(r["증거 메모"]),
         })
 
+    # Google Drive 기출문제 폴더(문항 단위 매핑) → 회차 증거 추가
+    drive_rows = defaultdict(list)
+    drive_seen = set()
+    for fkey, q, summary, names in drv.QUESTIONS:
+        f = drv.FILES[fkey]
+        for cname in names:
+            nid_of(cname)  # raises on typos
+            key = (cname, fkey, q)
+            if key in drive_seen:
+                continue
+            drive_seen.add(key)
+            drive_rows[cname].append({
+                "year": f["year"], "round": f["round"], "role": "출제/직접관련",
+                "era": "구범위" if f["round"] < 52 else "현행(2024 개정)", "strength": "높음", "url": "",
+                "source": f"{drv.DRIVE_ROOT}/{f['path']}", "memo": f"{q}번 · {summary}", "drive": True,
+            })
+    round_rows_all = defaultdict(list, {k: list(v) for k, v in round_rows.items()})
+    for cname, rows in drive_rows.items():
+        round_rows_all[cname].extend(rows)
+
     for nid, n in nodes.items():
         name = n["name"]
         m = master.get(name)
@@ -225,6 +263,14 @@ def build(xlsx: Path) -> dict:
         n["scope_status"] = s(m["범위 상태"]) if m else None
         n["current_round_list"] = sorted({x for x in all_rounds if x >= 52})
         n["old_round_list"] = sorted({x for x in all_rounds if x < 52})
+        d_rounds = sorted({r["round"] for r in drive_rows.get(name, [])})
+        if d_rounds:
+            added = [x for x in d_rounds if x < 52 and x not in n["old_round_list"]]
+            n["old_round_list"] = sorted(set(n["old_round_list"]) | {x for x in d_rounds if x < 52})
+            n["drive_rounds"] = d_rounds
+            n["drive_rounds_added"] = added
+            n["old_rounds"] = max(n["old_rounds"], len(n["old_round_list"]))
+            n["total_rounds"] = max(n["total_rounds"], n["old_rounds"] + n["current_rounds"])
         n["in_current_evidence"] = name in cur_ev
         n["in_legacy_only"] = name in leg_ev
         n["mindmap_gap"] = name in gap_ev
@@ -236,10 +282,21 @@ def build(xlsx: Path) -> dict:
                                      "source": s(r["대표 출처"]), "interpretation": s(r["해석"])}
         if name in leg_ev:
             r = leg_ev[name]
-            n["legacy_evidence"] = {"rounds": parse_rounds(r["구범위 확인 회차"]), "first": i(r["최초 구범위"]),
+            n["legacy_evidence"] = {"rounds": sorted(set(parse_rounds(r["구범위 확인 회차"])) | set(n["old_round_list"])),
+                                    "first": i(r["최초 구범위"]),
                                     "last": i(r["최근 구범위"]), "strength": s(r["최고 증거강도"]),
                                     "source": s(r["대표 출처"]), "scope": s(r["범위 상태"]),
                                     "interpretation": s(r["해석"])}
+
+    # 2024개정판_SQLD_개념정리.pdf 수록 Concept
+    note_by_name = defaultdict(list)
+    for section, names in drv.CONCEPT_NOTE.items():
+        for cname in names:
+            nid_of(cname)
+            note_by_name[cname].append(section)
+    for n in nodes.values():
+        if n["name"] in note_by_name:
+            n["concept_notes"] = note_by_name[n["name"]]
 
     # cross-check: evidence status vs sheets
     for nid in source_concept_ids:
@@ -256,6 +313,10 @@ def build(xlsx: Path) -> dict:
             n["evidence_status"] = "integration" if n["synthetic_kind"] == "integration" else "structure"
             n["is_legacy"] = False
             n["legacy_kind"] = None
+        elif n.get("supplement"):
+            n["evidence_status"] = n["supplement_status"]
+            n["is_legacy"] = n["supplement_status"] == "legacy_only"
+            n["legacy_kind"] = "older_evidence_only" if n["is_legacy"] else None
         elif n["node_type"] == "DIALECT":
             n["evidence_status"] = "reference"
             n["is_legacy"] = False
@@ -283,6 +344,10 @@ def build(xlsx: Path) -> dict:
     for nid, n in nodes.items():
         if n["synthetic"]:
             p = st.SYNTHETIC_PARENTS.get(n["name"])
+            n["hierarchy_parent"] = nid_of(p) if p else None
+            continue
+        if n.get("supplement"):
+            p = next(x["parent"] for x in drv.NEW_CONCEPTS if x["id"] == nid)
             n["hierarchy_parent"] = nid_of(p) if p else None
             continue
         cands = parents.get(nid, [])
@@ -356,7 +421,7 @@ def build(xlsx: Path) -> dict:
 
     inferred = {}
     curated_dup_explicit = []
-    for src_name, dst_name, reason in prereq_mod.EDGES:
+    for src_name, dst_name, reason in list(prereq_mod.EDGES) + list(drv.NEW_CONCEPT_EDGES):
         a, b = nid_of(src_name), nid_of(dst_name)
         if a == b:
             raise ValueError(f"self loop in curation: {src_name}")
@@ -544,7 +609,7 @@ def build(xlsx: Path) -> dict:
         comps.append({**{k: v for k, v in c.items() if k != "concepts"},
                       "concepts": [nid_of(x) for x in c["concepts"]]})
     dials = []
-    for d in dialect_mod.DIALECTS:
+    for d in list(dialect_mod.DIALECTS) + list(drv.NEW_DIALECTS):
         dials.append({**{k: v for k, v in d.items() if k != "concepts"},
                       "concepts": [nid_of(x) for x in d["concepts"]]})
     comp_by_node = defaultdict(list)
@@ -556,7 +621,8 @@ def build(xlsx: Path) -> dict:
         for x in d["concepts"]:
             dial_by_node[x].append(d["id"])
 
-    for name in list(content_mod.DEFINITIONS) + list(content_mod.RICH_RULES):
+    for name in (list(content_mod.DEFINITIONS) + list(content_mod.RICH_RULES) + list(drv.NEW_DEFS)
+                 + list(drv.NEW_RULES) + list(drv.RULE_PATCHES)):
         nid_of(name)  # raises on typos
 
     hub_by_node = defaultdict(list)
@@ -565,8 +631,9 @@ def build(xlsx: Path) -> dict:
             hub_by_node[x].append(h)
 
     rules = {}
+    content_review = []
     for nid, n in nodes.items():
-        rr = content_mod.RICH_RULES.get(n["name"], {})
+        rr = content_mod.RICH_RULES.get(n["name"]) or drv.NEW_RULES.get(n["name"], {})
         hub_cards = [{"hub": h["hub"], "role": h["role"], "core_rule": h["core_rule"], "study_note": h["study_note"]}
                      for h in hub_by_node.get(nid, [])]
         core_rule = list(rr.get("rules", []))
@@ -584,6 +651,30 @@ def build(xlsx: Path) -> dict:
             "examples": list(rr.get("examples", [])),
             "hubs": hub_cards,
         }
+        if not rules[nid]["definition"]:
+            rules[nid]["definition"] = drv.NEW_DEFS.get(n["name"], "")
+        patch = drv.RULE_PATCHES.get(n["name"])
+        if patch:
+            rec = {"concept": n["name"], "changes": []}
+            if patch.get("definition"):
+                rec["changes"].append({"field": "definition", "removed": rules[nid]["definition"],
+                                       "added": patch["definition"]})
+                rules[nid]["definition"] = patch["definition"]
+            for field, key in (("core_rule", "remove_rules"), ("exam_traps", "remove_traps")):
+                for t in patch.get(key, []):
+                    if t not in rules[nid][field]:
+                        raise ValueError(f"RULE_PATCHES {n['name']}: '{t}' not in {field}")
+                    rules[nid][field].remove(t)
+                    rec["changes"].append({"field": field, "removed": t})
+            for field, key in (("core_rule", "rules"), ("exam_traps", "traps"), ("examples", "examples"),
+                               ("dialect_notes", "dialect")):
+                for t in patch.get(key, []):
+                    if t not in rules[nid][field]:
+                        rules[nid][field].append(t)
+                        rec["changes"].append({"field": field, "added": t})
+            if patch.get("note"):
+                rec["note"] = patch["note"]
+            content_review.append(rec)
         if n["name"] == "SQL 논리 실행 순서":
             rules[nid]["execution_order"] = [
                 {"edge": f"{rj['source_name']} → {rj['target_name']}", "note": rj["reason"]} for rj in rejected_explicit
@@ -591,7 +682,11 @@ def build(xlsx: Path) -> dict:
                   "note": "17_KG_Edges PRECEDES 체인(논리적 실행 순서)"}]
 
     # ---- visibility / support ---------------------------------------------
-    base = {nid for nid, n in nodes.items() if not n["is_legacy"]}
+    # 개념정리(2024 개정판)에 수록된 구범위 전용 Concept은 현행 범위로 보고 기본 화면에 둔다(D7 등 범위 밖 제외).
+    for n in nodes.values():
+        n["concept_note_visible"] = bool(n["is_legacy"] and n.get("concept_notes")
+                                         and n["legacy_kind"] != "out_of_scope")
+    base = {nid for nid, n in nodes.items() if not n["is_legacy"] or n["concept_note_visible"]}
     support = set()
     for nid in base:
         for a in nx.ancestors(dag, nid):
@@ -642,6 +737,9 @@ def build(xlsx: Path) -> dict:
             else:
                 n["priority"] = "B"
                 reasons.append(f"현행 {cur}회 출제 확인")
+        elif n["concept_note_visible"]:
+            n["priority"] = "C"
+            reasons.append(f"현행 회차 증거 없음(구범위 {n['old_rounds']}회) — 2024 개정판 개념정리 수록 개념이라 기본 화면에 표시")
         elif n["support"]:
             n["priority"] = "C"
             reasons.append(f"현행 증거 없음(구범위 {n['old_rounds']}회) — 현행 Concept {n.get('support_for_count', 0)}개의 선수/상위 개념이라 구조적으로 필요")
@@ -744,7 +842,8 @@ def build(xlsx: Path) -> dict:
                                                if n["name"] == fam or n.get("gap_family") == fam]})
 
     # ---- evidence output --------------------------------------------------
-    evidence = {nid: sorted(round_rows.get(n["name"], []), key=lambda r: r["round"]) for nid, n in nodes.items()}
+    evidence = {nid: sorted(round_rows_all.get(n["name"], []), key=lambda r: (r["round"], bool(r.get("drive"))))
+                for nid, n in nodes.items()}
 
     # ---- legacy nodes -----------------------------------------------------
     legacy_nodes = []
@@ -765,6 +864,21 @@ def build(xlsx: Path) -> dict:
         "total_source_concepts": len(source_concept_ids),
         "dialect_reference_nodes": len(dialect_ids),
         "synthetic_nodes": sum(n["synthetic"] for n in nodes.values()),
+        "drive_sources": {
+            "root": drv.DRIVE_ROOT,
+            "folder_files": drv.FOLDER_FILES,
+            "files": {k: {**v} for k, v in drv.FILES.items()},
+            "questions_mapped": len(drv.QUESTIONS),
+            "concept_links": sum(len(x[3]) for x in drv.QUESTIONS),
+            "concepts_with_drive_evidence": len(drive_rows),
+            "rounds_added_to_concepts": sum(len(n.get("drive_rounds_added", [])) for n in nodes.values()),
+            "skipped_questions": [{"file": f, "q": q, "reason": r} for f, q, r in drv.SKIPPED_QUESTIONS],
+            "supplement_nodes": [{"name": x["name"], "status": x["status"], "basis": x["basis"]} for x in drv.NEW_CONCEPTS],
+            "concept_note_file": f"{drv.DRIVE_ROOT}/{drv.CONCEPT_NOTE_FILE}",
+            "concept_note_concepts": sum(1 for n in nodes.values() if n.get("concept_notes")),
+            "concept_note_legacy_shown": sorted(n["name"] for n in nodes.values() if n["concept_note_visible"]),
+            "content_review": content_review,
+        },
         "relation_counts": dict(relation_counts),
         "curated_edges_duplicating_explicit": curated_dup_explicit,
         "notes": report_notes,

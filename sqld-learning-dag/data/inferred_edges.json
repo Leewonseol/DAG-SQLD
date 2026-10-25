@@ -5917,5 +5917,32 @@
   "reason": "Row Migration은(는) 성능 모델링에서 다루는 저장 현상",
   "source_name": "성능 데이터 모델링",
   "target_name": "Row Migration"
+ },
+ {
+  "source": "N0437",
+  "target": "D001",
+  "origin": "inferred",
+  "inferred": true,
+  "reason": "DUAL은 SELECT … FROM 형식을 갖추기 위한 더미 테이블이라 SELECT 문 구조를 먼저 알아야 함",
+  "source_name": "SELECT",
+  "target_name": "DUAL"
+ },
+ {
+  "source": "N0076",
+  "target": "D004",
+  "origin": "inferred",
+  "inferred": true,
+  "reason": "KEEP (DENSE_RANK FIRST|LAST …)은 DENSE_RANK 순위로 집계 대상 행을 고르는 문법",
+  "source_name": "DENSE_RANK",
+  "target_name": "KEEP DENSE_RANK FIRST/LAST"
+ },
+ {
+  "source": "N0068",
+  "target": "D004",
+  "origin": "inferred",
+  "inferred": true,
+  "reason": "KEEP은 MAX·MIN·SUM 같은 집계 함수에 붙는 절",
+  "source_name": "집계 함수",
+  "target_name": "KEEP DENSE_RANK FIRST/LAST"
  }
 ]

@@ -371,7 +371,7 @@
       + `<span>지금 공부 가능 <b>${ready}</b></span>`
       + `<span>${state.includeLegacy ? 'Legacy 포함' : `Legacy ${D.nodes.filter((n) => !n.visible_by_default).length}개 숨김`}</span>`;
     document.getElementById('sub').textContent =
-      `Concept ${D.summary['Total source concepts']} · 현행 ${D.summary['Current concepts']} · prerequisite edge ${D.summary['Explicit prerequisite edges'] + D.summary['Inferred prerequisite edges']} · DAG ${D.summary['Is DAG'] ? '✓' : '✗'}`;
+      `Concept ${D.summary['Total source concepts']}${D.summary['Drive supplement concepts'] ? ` (+Drive ${D.summary['Drive supplement concepts']})` : ''} · 현행 ${D.summary['Current concepts']} · prerequisite edge ${D.summary['Explicit prerequisite edges'] + D.summary['Inferred prerequisite edges']} · DAG ${D.summary['Is DAG'] ? '✓' : '✗'}`;
   }
 
   // ------------------------------------------------------------------ panel: detail
@@ -394,6 +394,8 @@
     const nextCur = SUCC.get(n.id).filter((x) => NODES.get(x).evidence_status === 'current').length;
     if (nextCur) parts.push(`현행 Concept ${nextCur}개를 이해하기 위한 직접 선수 Concept.`);
     if (n.support) parts.push(`기본 화면에 표시되는 이유: ${n.support_for_count}개 현행/통합 Concept의 선수 또는 상위 개념.`);
+    if (n.concept_note_visible) parts.push('기본 화면에 표시되는 이유: 2024 개정판 개념정리에 수록된 개념(현행 범위).');
+    if (n.drive_rounds_added && n.drive_rounds_added.length) parts.push(`Google Drive 기출문제 폴더에서 구범위 ${n.drive_rounds_added.join(', ')}회 근거 추가.`);
     if (n.mindmap_gap) parts.push(`기존 마인드맵에 ${n.mindmap_status === '없음' ? '없던' : '세분화가 필요했던'} 현행 Concept(${n.mindmap_gap_action}).`);
     return parts.join(' ');
   }
@@ -463,7 +465,7 @@
     const rows = EVID[n.id] || [];
     const cur = rows.filter((r) => r.round >= 52);
     const old = rows.filter((r) => r.round < 52);
-    const table = (rs) => (rs.length ? `<details><summary>회차별 근거 ${rs.length}건</summary><table>${rs.map((r) => `<tr><td>${r.year} · ${r.round}회</td><td>${esc(r.strength)}</td><td>${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.url.replace(/^https?:\/\//, '').slice(0, 48))}</a>` : ''}${r.memo ? `<div class="exp-note">${esc(r.memo)}</div>` : ''}</td></tr>`).join('')}</table></details>` : '');
+    const table = (rs) => (rs.length ? `<details><summary>회차별 근거 ${rs.length}건</summary><table>${rs.map((r) => `<tr><td>${r.year} · ${r.round}회</td><td>${esc(r.strength)}</td><td>${r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.url.replace(/^https?:\/\//, '').slice(0, 48))}</a>` : (r.source ? `<span class="src">${esc(r.source)}</span>` : '')}${r.memo ? `<div class="exp-note">${esc(r.memo)}</div>` : ''}</td></tr>`).join('')}</table></details>` : '');
     const ce = n.current_evidence;
     const le = n.legacy_evidence;
     let h = '<h3>현행 기출 근거 <span class="n">(52회 이후)</span></h3><div class="evi">';
@@ -504,9 +506,11 @@
       + (n.mindmap_status ? `<span class="badge">마인드맵: ${esc(n.mindmap_status)}</span>` : '')
       + (n.mindmap_gap ? `<span class="badge gap" title="13_Current_Mindmap_Gaps">gap: ${esc(n.mindmap_gap_action)}</span>` : '')
       + (n.support ? '<span class="badge" title="현행 Concept의 선수/상위 개념이라 기본 화면에 표시">보조(선수)</span>' : '')
+      + (n.concept_notes ? `<span class="badge note-src" title="2024개정판_SQLD_개념정리.pdf · ${esc(n.concept_notes.join(' / '))}">개념정리 수록</span>` : '')
       + (!n.visible_by_default ? '<span class="badge prio-Legacy">기본 화면 숨김</span>' : '')
       + '</div>';
     h += `<div class="exp-note">${esc((n.priority_reasons || []).join(' · '))}</div>`;
+    if (n.supplement) h += `<div class="note">원본 시트에 없던 개념으로, Google Drive SQLD 자료에서 확인해 추가했습니다. 근거: ${esc(n.supplement_basis)}</div>`;
     if (n.synthetic) h += `<div class="note">원본 시트에 없는 <b>${n.synthetic_kind === 'integration' ? '통합(Stage 9)' : '구조'} 노드</b>입니다. 근거: ${esc(n.synthetic_basis)}</div>`;
     if (n.placement_override) {
       const p = n.placement_override;
@@ -575,7 +579,7 @@
         <li>Concept 왼쪽 동그라미를 누르면 학습 완료 체크, 상세 패널에서 학습 중/복습 필요 지정</li>
         <li>Legacy(52회 이후 현행 증거 없음)는 기본 숨김. 단 현행 Concept의 선수인 구범위 Concept은 Priority C 보조 노드로 표시</li>
       </ul>
-      <h3>데이터</h3><p class="exp-note">Concept ${sm['Total source concepts']} (현행 ${sm['Current concepts']}, Legacy-only ${sm['Legacy-only concepts']}) ·
+      <h3>데이터</h3><p class="exp-note">Concept ${sm['Total source concepts']} (현행 ${sm['Current concepts']}, Legacy-only ${sm['Legacy-only concepts']}${sm['Drive supplement concepts'] ? `, Google Drive 자료로 추가 ${sm['Drive supplement concepts']}` : ''}) ·
       DAG 노드 ${sm['Learning DAG nodes']} · 명시 선수 edge ${sm['Explicit prerequisite edges']} · inferred ${sm['Inferred prerequisite edges']} · Is DAG ${sm['Is DAG']}</p>`;
   }
 

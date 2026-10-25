@@ -6,4 +6,6 @@ Everything in this package is a deliberate, reviewable decision:
 - content.py        : definitions, core rules, exam traps, examples, aliases
 - comparisons.py    : exam comparison cards (CONTRASTS-like relations live here, not in the DAG)
 - dialects.py       : ANSI / Oracle / SQL Server differences
+- drive_sources.py  : Google Drive "SQLD" folder material (past-exam question → concept mapping,
+                      2024 concept-note coverage, supplement concepts, rule patches)
 """
